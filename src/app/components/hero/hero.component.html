@@ -1,0 +1,283 @@
+<!-- 🍽️ CLEAN & BALANCED HERO SECTION -->
+<section
+  class="relative min-h-screen flex items-center justify-center px-6 pt-16 overflow-hidden theme-transition"
+>
+  <!-- Sophisticated Gradient Background -->
+  <div class="absolute inset-0 -z-10">
+    <!-- Refined Gradient -->
+    <div
+      class="absolute inset-0 theme-transition"
+      [style.background]="
+        isDarkMode
+          ? 'radial-gradient(ellipse 60% 60% at 50% -10%, var(--color-primary)10 0%, transparent 50%), radial-gradient(ellipse 40% 40% at 90% 90%, var(--color-accent)08 0%, transparent 50%), linear-gradient(165deg, var(--color-dark-background) 0%, #111111 50%, var(--color-dark-surface) 100%)'
+          : 'radial-gradient(ellipse 60% 60% at 50% -10%, var(--color-primary)05 0%, transparent 50%), radial-gradient(ellipse 40% 40% at 90% 90%, var(--color-accent)05 0%, transparent 50%), linear-gradient(165deg, var(--color-background) 0%, #FAFAFA 50%, var(--color-surface) 100%)'
+      "
+    ></div>
+
+    <!-- Subtle Gradient Orbs -->
+    <div
+      class="absolute top-1/4 -left-16 w-60 h-60 rounded-full opacity-20 blur-[80px] animate-float-slow"
+      [style.background]="themeService.colors().primary"
+      style="animation-duration: 10s"
+    ></div>
+
+    <div
+      class="absolute bottom-1/3 -right-16 w-72 h-72 rounded-full opacity-15 blur-[90px] animate-float"
+      [style.background]="themeService.colors().accent"
+      style="animation-duration: 14s; animation-delay: 2s"
+    ></div>
+
+    <!-- Enhanced Grid Pattern Overlay -->
+    <div
+      class="absolute inset-0 opacity-[0.03]"
+      [style.backgroundImage]="
+        'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(to right, currentColor 1px, transparent 1px)'
+      "
+      [style.backgroundSize]="'40px 40px'"
+      [style.color]="themeService.colors().text"
+    ></div>
+
+    <!-- Additional diagonal grid for more texture -->
+    <div
+      class="absolute inset-0 opacity-[0.015]"
+      [style.backgroundImage]="
+        'linear-gradient(45deg, currentColor 1px, transparent 1px), linear-gradient(-45deg, currentColor 1px, transparent 1px)'
+      "
+      [style.backgroundSize]="'60px 60px'"
+      [style.color]="themeService.colors().text"
+    ></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto w-full">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <!-- Left Content - Refined -->
+      <div class="space-y-8">
+        <!-- Subtle Badge -->
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full border backdrop-blur-sm theme-transition animate-fade-in-up"
+          [ngClass]="
+            isDarkMode
+              ? 'border-primary/20 bg-primary/5'
+              : 'border-primary/15 bg-primary/3'
+          "
+        >
+          <span
+            class="text-xs font-medium tracking-wide uppercase"
+            [style.color]="themeService.colors().primary"
+          >
+            Premium Platform
+          </span>
+        </div>
+
+        <!-- Balanced Title -->
+        <div class="space-y-3">
+          <h1
+            class="font-display font-bold text-4xl md:text-5xl lg:text-6xl leading-[1.1] tracking-tight"
+          >
+            <span class="block animate-slide-in-left stagger-1">
+              <span
+                class="bg-gradient-to-r from-gray-800 to-gray-600 bg-clip-text text-transparent dark:from-white dark:to-gray-300"
+              >
+                Master
+              </span>
+            </span>
+            <span class="block mt-2 animate-slide-in-left stagger-2">
+              <span
+                class="bg-gradient-to-r"
+                [style.backgroundImage]="
+                  'linear-gradient(135deg, ' +
+                  themeService.colors().primary +
+                  ', ' +
+                  themeService.colors().accent +
+                  ')'
+                "
+                class="bg-clip-text text-transparent"
+              >
+                Culinary Arts
+              </span>
+            </span>
+          </h1>
+        </div>
+
+        <!-- Clean Subtitle -->
+        <p
+          class="text-lg md:text-xl leading-relaxed font-normal animate-fade-in-up max-w-lg"
+          [style.color]="themeService.colors().secondary"
+        >
+          Transform your cooking with AI-powered recipes, step-by-step videos,
+          and chef-curated techniques for every skill level.
+        </p>
+
+        <!-- Refined CTA Buttons -->
+        <div class="flex flex-wrap gap-4 pt-4 animate-fade-in-up">
+          <button
+            nz-button
+            nzType="primary"
+            nzSize="large"
+            nzShape="round"
+            class="px-8 py-5 h-auto text-base font-semibold flex items-center space-x-2 hover:scale-105 theme-transition shadow-lg group"
+            [style.background]="
+              'linear-gradient(135deg, ' +
+              themeService.colors().primary +
+              ', ' +
+              themeService.colors().accent +
+              ')'
+            "
+            [style.border]="'none'"
+            [style.boxShadow]="
+              '0 12px 40px ' + themeService.colors().primary + '30'
+            "
+          >
+            <span
+              nz-icon
+              nzType="thunderbolt"
+              nzTheme="fill"
+              class="text-lg group-hover:scale-110 theme-transition"
+            ></span>
+            <span>Start Cooking Free</span>
+          </button>
+
+          <button
+            nz-button
+            nzSize="large"
+            nzShape="round"
+            class="px-8 py-5 h-auto text-base font-medium flex items-center space-x-2 border hover:scale-105 theme-transition group"
+            [style.background]="
+              isDarkMode ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.02)'
+            "
+            [style.borderColor]="themeService.colors().accent + '40'"
+            [style.color]="themeService.colors().accent"
+          >
+            <span
+              nz-icon
+              nzType="play-circle"
+              nzTheme="fill"
+              class="text-lg group-hover:scale-110 theme-transition"
+            ></span>
+            <span>Watch Demo</span>
+          </button>
+        </div>
+
+        <!-- Minimal Stats -->
+        <div class="grid grid-cols-3 gap-4 pt-8">
+          <div
+            *ngFor="let stat of stats; let i = index"
+            class="text-center p-4 rounded-xl theme-transition hover:scale-105 cursor-pointer animate-scale-in backdrop-blur-sm"
+            [style.animation-delay]="i * 0.15 + 's'"
+            [ngClass]="
+              isDarkMode
+                ? 'bg-white/3 border border-white/5'
+                : 'bg-black/3 border border-black/5'
+            "
+          >
+            <div
+              class="font-display text-2xl font-bold mb-1"
+              [style.color]="stat.color"
+            >
+              {{ stat.value }}
+            </div>
+            <div
+              class="text-xs font-medium uppercase tracking-wider opacity-70"
+              [style.color]="themeService.colors().secondary"
+            >
+              {{ stat.label }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Clean Image Gallery -->
+      <div class="relative animate-slide-in-right">
+        <div class="grid grid-cols-2 gap-4">
+          <!-- Card 1 - Clean -->
+          <div class="group cursor-pointer">
+            <div
+              class="relative rounded-2xl overflow-hidden theme-transition hover:shadow-xl h-64"
+              [style.background]="themeService.colors().surface"
+              [style.boxShadow]="
+                '0 8px 32px ' + themeService.colors().primary + '10'
+              "
+            >
+              <div class="absolute inset-0">
+                <img
+                  src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?auto=format&fit=crop&w=500&q=80"
+                  alt="Italian Pasta"
+                  class="w-full h-full object-cover theme-transition group-hover:scale-105"
+                />
+              </div>
+
+              <!-- Clean Overlay -->
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
+              ></div>
+
+              <!-- Content -->
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 theme-transition group-hover:translate-y-[-4px]"
+              >
+                <div
+                  class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-2"
+                >
+                  <span class="text-xs font-medium text-white">30 MIN</span>
+                </div>
+                <h3 class="font-display text-lg font-semibold text-white mb-1">
+                  Italian Pasta
+                </h3>
+                <p class="text-white/70 text-xs font-light">
+                  Fresh ingredients
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2 - Clean -->
+          <div class="group cursor-pointer mt-8">
+            <div
+              class="relative rounded-2xl overflow-hidden theme-transition hover:shadow-xl h-64"
+              [style.background]="themeService.colors().surface"
+              [style.boxShadow]="
+                '0 8px 32px ' + themeService.colors().accent + '10'
+              "
+            >
+              <div class="absolute inset-0">
+                <img
+                  src="https://i.imgur.com/68XZy59.jpeg"
+                  alt="Fresh Salad"
+                  class="w-full h-full object-cover theme-transition group-hover:scale-105"
+                />
+              </div>
+
+              <!-- Clean Overlay -->
+              <div
+                class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"
+              ></div>
+
+              <!-- Content -->
+              <div
+                class="absolute bottom-0 left-0 right-0 p-5 theme-transition group-hover:translate-y-[-4px]"
+              >
+                <div
+                  class="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-2"
+                >
+                  <span class="text-xs font-medium text-white">15 MIN</span>
+                </div>
+                <h3 class="font-display text-lg font-semibold text-white mb-1">
+                  Fresh Salad
+                </h3>
+                <p class="text-white/70 text-xs font-light">
+                  Healthy & vibrant
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subtle Decorative Element -->
+        <div
+          class="absolute -bottom-6 -left-6 w-24 h-24 rounded-full opacity-5 blur-2xl"
+          [style.background]="themeService.colors().primary"
+        ></div>
+      </div>
+    </div>
+  </div>
+</section>

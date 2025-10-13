@@ -1,0 +1,186 @@
+<!-- 🍽️ CLEAN & ELEGANT NAVBAR -->
+<nav
+  class="fixed top-0 left-0 right-0 z-50 theme-transition backdrop-blur-lg border-b"
+  [ngClass]="
+    isDarkMode
+      ? 'bg-gray-900/90 border-gray-700/30'
+      : 'bg-white/95 border-gray-200/30'
+  "
+>
+  <div class="max-w-7xl mx-auto px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <!-- Logo & Brand -->
+      <div class="flex items-center space-x-3 group cursor-pointer">
+        <div
+          class="w-10 h-10 rounded-xl flex items-center justify-center theme-transition group-hover:scale-105 shadow-md"
+          [style.background]="
+            'linear-gradient(135deg, ' +
+            themeService.colors().primary +
+            ', ' +
+            themeService.colors().accent +
+            ')'
+          "
+          [style.boxShadow]="
+            '0 4px 20px ' + themeService.colors().primary + '30'
+          "
+        >
+          <span
+            nz-icon
+            nzType="fire"
+            nzTheme="fill"
+            class="text-white text-lg"
+          ></span>
+        </div>
+
+        <span
+          class="font-display font-bold text-xl tracking-tight theme-transition"
+          [ngClass]="isDarkMode ? 'text-white' : 'text-gray-900'"
+        >
+          Savoria
+        </span>
+      </div>
+
+      <!-- Navigation Links - Clean Style -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          href="#"
+          class="text-sm font-medium theme-transition group relative py-2"
+          [ngClass]="
+            isDarkMode
+              ? 'text-gray-300 hover:text-white'
+              : 'text-gray-600 hover:text-gray-900'
+          "
+        >
+          <span class="flex items-center space-x-2">
+            <span
+              nz-icon
+              nzType="book"
+              nzTheme="outline"
+              class="text-base"
+            ></span>
+            <span>Recipes</span>
+          </span>
+          <div
+            class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full scale-x-0 group-hover:scale-x-100 theme-transition"
+          ></div>
+        </a>
+
+        <a
+          href="#"
+          class="text-sm font-medium theme-transition group relative py-2"
+          [ngClass]="
+            isDarkMode
+              ? 'text-gray-300 hover:text-white'
+              : 'text-gray-600 hover:text-gray-900'
+          "
+        >
+          <span class="flex items-center space-x-2">
+            <span
+              nz-icon
+              nzType="appstore"
+              nzTheme="outline"
+              class="text-base"
+            ></span>
+            <span>Collections</span>
+          </span>
+          <div
+            class="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full scale-x-0 group-hover:scale-x-100 theme-transition"
+          ></div>
+        </a>
+
+        <a
+          href="#"
+          class="text-sm font-medium theme-transition group relative py-2"
+          [ngClass]="
+            isDarkMode
+              ? 'text-gray-300 hover:text-white'
+              : 'text-gray-600 hover:text-gray-900'
+          "
+        >
+          <span class="flex items-center space-x-2">
+            <span
+              nz-icon
+              nzType="heart"
+              nzTheme="fill"
+              class="text-base"
+            ></span>
+            <span>Favorites</span>
+          </span>
+          <div
+            class="absolute bottom-0 left-0 right-0 h-0.5 bg-red-400 rounded-full scale-x-0 group-hover:scale-x-100 theme-transition"
+          ></div>
+        </a>
+      </div>
+
+      <!-- Right Actions - Simplified -->
+      <div class="flex items-center space-x-4">
+        <!-- Theme Toggle -->
+        <button
+          nz-button
+          nzType="text"
+          nzShape="circle"
+          [nzSize]="'large'"
+          (click)="toggleTheme()"
+          class="theme-transition hover:scale-105"
+          [ngClass]="
+            isDarkMode ? 'hover:bg-gray-800/40' : 'hover:bg-gray-100/60'
+          "
+        >
+          <span
+            nz-icon
+            [nzType]="isDarkMode ? 'sun' : 'moon'"
+            nzTheme="fill"
+            class="text-lg theme-transition"
+            [style.color]="themeService.colors().primary"
+          ></span>
+        </button>
+
+        <!-- Get Started Button -->
+        <button
+          nz-button
+          nzType="primary"
+          nzShape="round"
+          [nzSize]="'default'"
+          class="hidden md:flex items-center space-x-2 px-5 theme-transition hover:scale-105 shadow-md"
+          [style.background]="
+            'linear-gradient(135deg, ' +
+            themeService.colors().primary +
+            ', ' +
+            themeService.colors().accent +
+            ')'
+          "
+          [style.boxShadow]="
+            '0 6px 20px ' + themeService.colors().primary + '30'
+          "
+          [style.border]="'none'"
+        >
+          <span nz-icon nzType="rocket" nzTheme="fill" class="text-sm"></span>
+          <span class="font-medium text-sm">Get Started</span>
+        </button>
+
+        <!-- Mobile Menu Button -->
+        <button
+          nz-button
+          nzType="text"
+          nzShape="circle"
+          [nzSize]="'large'"
+          class="md:hidden theme-transition"
+          [ngClass]="
+            isDarkMode ? 'hover:bg-gray-800/40' : 'hover:bg-gray-100/60'
+          "
+        >
+          <span
+            nz-icon
+            nzType="menu"
+            nzTheme="outline"
+            class="text-lg"
+            [style.color]="isDarkMode ? '#F5F1E8' : '#2D2D2D'"
+          ></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Spacer for fixed navbar -->
+<div class="h-16"></div>
