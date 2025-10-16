@@ -1,0 +1,425 @@
+<!-- 🍽️ PROFESSIONAL 2025 REGISTER FORM -->
+<div
+  class="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
+>
+  <!-- Enhanced Background -->
+  <div class="absolute inset-0 -z-10">
+    <!-- Main Gradient -->
+    <div
+      class="absolute inset-0 theme-transition"
+      [ngClass]="
+        isDarkMode
+          ? 'bg-gradient-to-br from-gray-900 via-[#0F0F0F] to-gray-800'
+          : 'bg-gradient-to-br from-amber-50 via-white to-orange-50'
+      "
+    ></div>
+
+    <!-- Grid Pattern -->
+    <div
+      class="absolute inset-0 opacity-[0.015]"
+      [style.backgroundImage]="
+        'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(to right, currentColor 1px, transparent 1px)'
+      "
+      [style.backgroundSize]="'50px 50px'"
+      [style.color]="isDarkMode ? '#ffffff' : '#000000'"
+    ></div>
+
+    <!-- Enhanced Floating Orbs -->
+    <div
+      class="absolute top-20 -right-20 w-80 h-80 rounded-full opacity-10 blur-[100px] animate-float-slow"
+      [style.background]="themeService.colors().primary"
+    ></div>
+
+    <div
+      class="absolute bottom-20 -left-20 w-72 h-72 rounded-full opacity-8 blur-[90px] animate-float"
+      [style.background]="themeService.colors().accent"
+    ></div>
+
+    <div
+      class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full opacity-5 blur-[80px] animate-pulse-slow"
+      [style.background]="themeService.colors().secondary"
+    ></div>
+  </div>
+
+  <div class="w-full max-w-md">
+    <!-- Professional Card -->
+    <div
+      class="backdrop-blur-xl rounded-3xl p-8 theme-transition border animate-fade-in shadow-2xl"
+      [ngClass]="
+        isDarkMode
+          ? 'bg-gray-900/70 border-gray-700/50'
+          : 'bg-white/80 border-gray-200/50'
+      "
+    >
+      <!-- Header Section -->
+      <div class="text-center mb-8 animate-slide-down">
+        <div class="flex justify-center mb-4">
+          <div class="relative">
+            <div
+              class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg"
+              [style.background]="
+                'linear-gradient(135deg, ' +
+                themeService.colors().primary +
+                ', ' +
+                themeService.colors().accent +
+                ')'
+              "
+            >
+              <span
+                nz-icon
+                nzType="fire"
+                nzTheme="fill"
+                class="text-white text-xl"
+              ></span>
+            </div>
+          </div>
+        </div>
+
+        <h1
+          class="font-display font-bold text-2xl mb-2 leading-tight"
+          [ngClass]="isDarkMode ? 'text-white' : 'text-gray-900'"
+        >
+          Join Savoria
+        </h1>
+        <p
+          class="text-sm"
+          [ngClass]="isDarkMode ? 'text-gray-400' : 'text-gray-600'"
+        >
+          Create your account and start cooking
+        </p>
+      </div>
+
+      <!-- Professional Register Form -->
+      <form
+        nz-form
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+        class="animate-slide-up space-y-5"
+      >
+        <!-- Profile Picture - Enhanced -->
+        <!-- Profile Picture - Enhanced with Remove Option -->
+        <div class="flex justify-center mb-6">
+          <div class="relative group">
+            <nz-avatar
+              [nzSize]="80"
+              [nzIcon]="'user'"
+              [nzSrc]="avatarUrl ?? undefined"
+              class="cursor-pointer border-4 theme-transition group-hover:scale-105"
+              [ngClass]="isDarkMode ? 'border-gray-700' : 'border-gray-200'"
+            ></nz-avatar>
+
+            <!-- Camera Upload Button -->
+            <nz-upload
+              [nzShowUploadList]="false"
+              [nzBeforeUpload]="beforeUpload"
+            >
+              <button
+                nz-button
+                nzType="primary"
+                nzShape="circle"
+                nzSize="small"
+                class="absolute bottom-0 right-0 shadow-lg theme-transition hover:scale-110"
+                [style.background]="themeService.colors().primary"
+                style="border: none"
+              >
+                <span
+                  nz-icon
+                  nzType="camera"
+                  nzTheme="outline"
+                  class="text-xs"
+                ></span>
+              </button>
+            </nz-upload>
+
+            <!-- Remove Button - Only shows when avatarUrl exists -->
+            @if (avatarUrl) {
+            <button
+              nz-button
+              nzType="default"
+              nzShape="circle"
+              nzSize="small"
+              nzDanger
+              class="absolute top-0 right-0 shadow-lg theme-transition hover:scale-110"
+              (click)="removeAvatar()"
+              style="border: none"
+            >
+              <span
+                nz-icon
+                nzType="close"
+                nzTheme="outline"
+                class="text-xs"
+              ></span>
+            </button>
+            }
+          </div>
+        </div>
+
+        <!-- Username Field -->
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium block"
+            [ngClass]="isDarkMode ? 'text-gray-300' : 'text-gray-700'"
+          >
+            Username
+          </label>
+          <nz-form-item>
+            <nz-form-control
+              [nzValidateStatus]="registerForm.get('username')!"
+              [nzErrorTip]="usernameErrorTpl"
+              nzHasFeedback
+            >
+              <input
+                type="text"
+                nz-input
+                formControlName="username"
+                placeholder="Choose a username"
+                class="w-full rounded-lg py-3 px-4 theme-transition"
+                [ngClass]="
+                  isDarkMode
+                    ? 'bg-gray-800/80 text-gray-400 placeholder-gray-500 border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                    : 'bg-white/90 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                "
+                style="height: 48px"
+                (blur)="markUsernameAsTouched()"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <ng-template #usernameErrorTpl let-control>
+            @if (control.errors?.['required']) {
+            <span>Username is required</span>
+            } @if (control.errors?.['minlength']) {
+            <span>Username must be at least 3 characters</span>
+            }
+          </ng-template>
+        </div>
+
+        <!-- Email Field -->
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium block"
+            [ngClass]="isDarkMode ? 'text-gray-300' : 'text-gray-700'"
+          >
+            Email Address
+          </label>
+          <nz-form-item>
+            <nz-form-control
+              [nzValidateStatus]="registerForm.get('email')!"
+              [nzErrorTip]="emailErrorTpl"
+              nzHasFeedback
+            >
+              <input
+                type="email"
+                nz-input
+                formControlName="email"
+                placeholder="your@email.com"
+                class="w-full rounded-lg py-3 px-4 theme-transition"
+                [ngClass]="
+                  isDarkMode
+                    ? 'bg-gray-800/80 text-gray-400 placeholder-gray-500 border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                    : 'bg-white/90 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                "
+                style="height: 48px"
+                (blur)="markEmailAsTouched()"
+              />
+            </nz-form-control>
+          </nz-form-item>
+          <ng-template #emailErrorTpl let-control>
+            @if (control.errors?.['required']) {
+            <span>Email is required</span>
+            } @if (control.errors?.['email']) {
+            <span>Please enter a valid email</span>
+            }
+          </ng-template>
+        </div>
+
+        <!-- Password Field -->
+        <!-- Password Field -->
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium block"
+            [ngClass]="isDarkMode ? 'text-gray-300' : 'text-gray-700'"
+          >
+            Password
+          </label>
+          <nz-form-item>
+            <nz-form-control
+              [nzValidateStatus]="registerForm.get('password')!"
+              [nzErrorTip]="passwordErrorTpl"
+              nzHasFeedback
+            >
+              <div class="relative">
+                <input
+                  [type]="passwordVisible ? 'text' : 'password'"
+                  nz-input
+                  formControlName="password"
+                  placeholder="Create a password"
+                  class="w-full rounded-lg py-3 px-4 pr-16 theme-transition"
+                  [ngClass]="
+                    isDarkMode
+                      ? 'bg-gray-800/80  text-gray-400 placeholder-gray-500 border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                      : 'bg-white/90 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                  "
+                  style="height: 48px"
+                  (blur)="markPasswordAsTouched()"
+                />
+                <button
+                  type="button"
+                  (click)="passwordVisible = !passwordVisible"
+                  class="absolute right-10 top-1/2 -translate-y-1/2 theme-transition hover:opacity-70 p-1 rounded"
+                  [ngClass]="
+                    isDarkMode
+                      ? 'text-gray-400 hover:bg-gray-700'
+                      : 'text-gray-500 hover:bg-gray-100'
+                  "
+                >
+                  <span
+                    nz-icon
+                    [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+                    class="text-base"
+                  ></span>
+                </button>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+          <ng-template #passwordErrorTpl let-control>
+            @if (control.errors?.['required']) {
+            <span>Password is required</span>
+            } @if (control.errors?.['minlength']) {
+            <span>Password must be at least 8 characters</span>
+            }
+          </ng-template>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div class="space-y-2">
+          <label
+            class="text-sm font-medium block"
+            [ngClass]="isDarkMode ? 'text-gray-300' : 'text-gray-700'"
+          >
+            Confirm Password
+          </label>
+          <nz-form-item>
+            <nz-form-control
+              [nzValidateStatus]="registerForm.get('confirmPassword')!"
+              [nzErrorTip]="confirmPasswordErrorTpl"
+              nzHasFeedback
+            >
+              <div class="relative">
+                <input
+                  [type]="confirmPasswordVisible ? 'text' : 'password'"
+                  nz-input
+                  formControlName="confirmPassword"
+                  placeholder="Confirm your password"
+                  class="w-full rounded-lg py-3 px-4 pr-16 theme-transition"
+                  [ngClass]="
+                    isDarkMode
+                      ? 'bg-gray-800/80  text-gray-400 placeholder-gray-500 border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                      : 'bg-white/90 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'
+                  "
+                  style="height: 48px"
+                  (blur)="markPasswordAsTouched()"
+                />
+                <button
+                  type="button"
+                  (click)="confirmPasswordVisible = !confirmPasswordVisible"
+                  class="absolute right-10 top-1/2 -translate-y-1/2 theme-transition hover:opacity-70 p-1 rounded"
+                  [ngClass]="
+                    isDarkMode
+                      ? 'text-gray-400 hover:bg-gray-700'
+                      : 'text-gray-500 hover:bg-gray-100'
+                  "
+                >
+                  <span
+                    nz-icon
+                    [nzType]="confirmPasswordVisible ? 'eye-invisible' : 'eye'"
+                    class="text-base"
+                  ></span>
+                </button>
+              </div>
+            </nz-form-control>
+          </nz-form-item>
+          <ng-template #confirmPasswordErrorTpl let-control>
+            @if (control.errors?.['required']) {
+            <span>Please confirm your password</span>
+            } @if (registerForm.hasError('passwordMismatch')) {
+            <span> Passwords do not match</span>
+            }
+          </ng-template>
+        </div>
+
+        <!-- Create Account Button -->
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="large"
+          nzBlock
+          [nzLoading]="isLoading"
+          [disabled]="registerForm.invalid"
+          class="rounded-xl h-12 font-semibold mt-2 theme-transition relative overflow-hidden group"
+          [style.background]="
+            registerForm.invalid
+              ? isDarkMode
+                ? '#374151'
+                : '#D1D5DB'
+              : 'linear-gradient(135deg, ' +
+                themeService.colors().primary +
+                ', ' +
+                themeService.colors().accent +
+                ')'
+          "
+          [style.border]="'none'"
+          [style.boxShadow]="
+            registerForm.invalid
+              ? 'none'
+              : '0 8px 25px ' + themeService.colors().primary + '50'
+          "
+        >
+          <!-- Animated background effect -->
+          <div
+            class="absolute inset-0 bg-white/0 group-hover:bg-white/10 theme-transition"
+          ></div>
+
+          <span
+            class="flex items-center justify-center space-x-2 relative z-10"
+          >
+            <span
+              nz-icon
+              nzType="user-add"
+              nzTheme="outline"
+              *ngIf="!isLoading"
+              class="group-hover:scale-110 theme-transition"
+            ></span>
+            <span class="font-semibold tracking-wide">
+              {{ isLoading ? "Creating Account..." : "Create Account" }}
+            </span>
+          </span>
+
+          <!-- Shine effect -->
+          <div
+            class="absolute inset-0 -skew-x-12 -translate-x-full group-hover:translate-x-full theme-transition duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          ></div>
+        </button>
+
+        <!-- Login Link -->
+        <div
+          class="text-center pt-6 border-t"
+          [ngClass]="isDarkMode ? 'border-gray-700' : 'border-gray-200'"
+        >
+          <span
+            class="text-sm"
+            [ngClass]="isDarkMode ? 'text-gray-400' : 'text-gray-500'"
+          >
+            Already have an account?
+          </span>
+          <a
+            (click)="navigateToLogin()"
+            class="text-sm font-semibold ml-1 cursor-pointer theme-transition hover:opacity-70"
+            [style.color]="themeService.colors().primary"
+          >
+            Sign in
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

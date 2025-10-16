@@ -10,7 +10,10 @@
   <div class="max-w-7xl mx-auto px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <!-- Logo & Brand -->
-      <div class="flex items-center space-x-3 group cursor-pointer">
+      <a
+        routerLink="/"
+        class="flex items-center space-x-3 group cursor-pointer no-underline"
+      >
         <div
           class="w-10 h-10 rounded-xl flex items-center justify-center theme-transition group-hover:scale-105 shadow-md"
           [style.background]="
@@ -38,13 +41,15 @@
         >
           Savoria
         </span>
-      </div>
+      </a>
 
-      <!-- Navigation Links - Clean Style -->
+      <!-- Navigation Links - Clean Style (Only show when logged in) -->
+      @if (isLoggedIn) {
       <div class="hidden md:flex items-center space-x-8">
         <a
-          href="#"
-          class="text-sm font-medium theme-transition group relative py-2"
+          routerLink="/recipes"
+          routerLinkActive="active-link"
+          class="text-sm font-medium theme-transition group relative py-2 no-underline"
           [ngClass]="
             isDarkMode
               ? 'text-gray-300 hover:text-white'
@@ -61,13 +66,15 @@
             <span>Recipes</span>
           </span>
           <div
-            class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full scale-x-0 group-hover:scale-x-100 theme-transition"
+            class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full scale-x-0 group-hover:scale-x-100 theme-transition"
+            [style.background]="themeService.colors().primary"
           ></div>
         </a>
 
         <a
-          href="#"
-          class="text-sm font-medium theme-transition group relative py-2"
+          routerLink="/collections"
+          routerLinkActive="active-link"
+          class="text-sm font-medium theme-transition group relative py-2 no-underline"
           [ngClass]="
             isDarkMode
               ? 'text-gray-300 hover:text-white'
@@ -84,13 +91,15 @@
             <span>Collections</span>
           </span>
           <div
-            class="absolute bottom-0 left-0 right-0 h-0.5 bg-accent rounded-full scale-x-0 group-hover:scale-x-100 theme-transition"
+            class="absolute bottom-0 left-0 right-0 h-0.5 rounded-full scale-x-0 group-hover:scale-x-100 theme-transition"
+            [style.background]="themeService.colors().accent"
           ></div>
         </a>
 
         <a
-          href="#"
-          class="text-sm font-medium theme-transition group relative py-2"
+          routerLink="/favorites"
+          routerLinkActive="active-link"
+          class="text-sm font-medium theme-transition group relative py-2 no-underline"
           [ngClass]="
             isDarkMode
               ? 'text-gray-300 hover:text-white'
@@ -111,6 +120,7 @@
           ></div>
         </a>
       </div>
+      }
 
       <!-- Right Actions - Simplified -->
       <div class="flex items-center space-x-4">
@@ -135,13 +145,16 @@
           ></span>
         </button>
 
-        <!-- Get Started Button -->
-        <button
+        <!-- Show Different Buttons Based on Auth State -->
+        @if (!isLoggedIn) {
+        <!-- Get Started Button (Not Logged In) -->
+        <a
+          routerLink="/login"
           nz-button
           nzType="primary"
           nzShape="round"
           [nzSize]="'default'"
-          class="hidden md:flex items-center space-x-2 px-5 theme-transition hover:scale-105 shadow-md"
+          class="hidden md:flex items-center space-x-2 px-5 theme-transition hover:scale-105 shadow-md no-underline"
           [style.background]="
             'linear-gradient(135deg, ' +
             themeService.colors().primary +
@@ -156,7 +169,172 @@
         >
           <span nz-icon nzType="rocket" nzTheme="fill" class="text-sm"></span>
           <span class="font-medium text-sm">Get Started</span>
-        </button>
+        </a>
+        } @else {
+        <!-- User Menu (Logged In) -->
+        <div
+          nz-dropdown
+          [nzDropdownMenu]="userMenu"
+          nzTrigger="click"
+          nzPlacement="bottomRight"
+          class="hidden md:block"
+        >
+          <button
+            nz-button
+            nzType="text"
+            class="flex items-center space-x-2 px-3 py-2 rounded-lg theme-transition hover:scale-105"
+            [ngClass]="
+              isDarkMode ? 'hover:bg-gray-800/40' : 'hover:bg-gray-100/60'
+            "
+          >
+            <!-- User Avatar -->
+            <nz-avatar
+              [nzSize]="32"
+              [nzSrc]="currentUser?.profilePicture || undefined"
+              [nzIcon]="currentUser?.profilePicture ? undefined : 'user'"
+              class="border-2"
+              [style.background]="
+                'linear-gradient(135deg, ' +
+                themeService.colors().primary +
+                ', ' +
+                themeService.colors().accent +
+                ')'
+              "
+            ></nz-avatar>
+
+            <!-- Username -->
+            <span
+              class="text-sm font-medium"
+              [ngClass]="isDarkMode ? 'text-gray-200' : 'text-gray-700'"
+            >
+              {{ currentUser?.username || "User" }}
+            </span>
+
+            <!-- Dropdown Icon -->
+            <span
+              nz-icon
+              nzType="down"
+              class="text-xs"
+              [ngClass]="isDarkMode ? 'text-gray-400' : 'text-gray-500'"
+            ></span>
+          </button>
+        </div>
+
+        <!-- Dropdown Menu -->
+        <nz-dropdown-menu #userMenu="nzDropdownMenu">
+          <ul
+            nz-menu
+            class="rounded-xl overflow-hidden shadow-xl border backdrop-blur-sm min-w-[220px] py-2"
+            [ngClass]="
+              isDarkMode
+                ? 'bg-gray-800/95 border-gray-700/50'
+                : 'bg-white/95 border-gray-200/50'
+            "
+          >
+            <!-- User Info Header -->
+            <li
+              nz-menu-item
+              [nzDisabled]="true"
+              class="!px-4 !py-3 border-b"
+              [ngClass]="
+                isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'
+              "
+            >
+              <div class="flex items-center space-x-3">
+                <nz-avatar
+                  [nzSize]="40"
+                  [nzSrc]="currentUser?.profilePicture || undefined"
+                  [nzIcon]="currentUser?.profilePicture ? undefined : 'user'"
+                  class="border-2"
+                  [ngClass]="
+                    isDarkMode ? 'border-amber-500/50' : 'border-amber-400/50'
+                  "
+                ></nz-avatar>
+                <div class="flex-1 min-w-0">
+                  <div
+                    class="text-sm font-semibold truncate"
+                    [ngClass]="
+                      isDarkMode ? 'text-amber-900' : 'text-amber-900/80'
+                    "
+                  >
+                    {{ currentUser?.username }}
+                  </div>
+                  <div
+                    class="text-md truncate mt-1"
+                    [ngClass]="
+                      isDarkMode ? 'text-amber-800/80' : 'text-amber-600/80'
+                    "
+                  >
+                    {{ currentUser?.email }}
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <!-- Dashboard Link -->
+            <li
+              nz-menu-item
+              routerLink="/dashboard"
+              class="!px-4 !py-3 theme-transition hover:scale-[1.02]"
+            >
+              <span
+                nz-icon
+                nzType="dashboard"
+                class="mr-3 text-amber-500"
+              ></span>
+              <span class="font-medium text-gray-600">My Kitchen</span>
+            </li>
+
+            <!-- Profile Link -->
+            <li
+              nz-menu-item
+              routerLink="/profile"
+              class="!px-4 !py-3 theme-transition hover:scale-[1.02]"
+            >
+              <span nz-icon nzType="user" class="mr-3 text-blue-500"></span>
+              <span class="font-medium text-gray-600">My Profile</span>
+            </li>
+
+            <!-- Settings Link -->
+            <li
+              nz-menu-item
+              routerLink="/settings"
+              class="!px-4 !py-3 theme-transition hover:scale-[1.02]"
+            >
+              <span
+                nz-icon
+                nzType="setting"
+                class="mr-3 text-purple-500"
+              ></span>
+              <span class="font-medium text-gray-600">Settings</span>
+            </li>
+
+            <!-- Divider -->
+            <li
+              nz-menu-divider
+              class="!my-2"
+              [ngClass]="isDarkMode ? '!bg-gray-700/50' : '!bg-gray-200/50'"
+            ></li>
+
+            <!-- Logout -->
+            <li
+              nz-menu-item
+              (click)="logout()"
+              class="!px-4 !py-3 theme-transition hover:scale-[1.02] group"
+            >
+              <span
+                nz-icon
+                nzType="logout"
+                class="mr-3 text-red-500 group-hover:scale-110 theme-transition"
+              ></span>
+              <span
+                class="font-medium text-red-500 group-hover:text-red-600 theme-transition"
+                >Sign Out</span
+              >
+            </li>
+          </ul>
+        </nz-dropdown-menu>
+        }
 
         <!-- Mobile Menu Button -->
         <button
