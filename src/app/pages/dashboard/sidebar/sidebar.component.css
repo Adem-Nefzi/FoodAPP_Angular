@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+/* Smooth transitions */
+* {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
+/* Added custom animations for modern feel */
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(34, 197, 94, 0.5);
+  }
+}
+
+:host ::ng-deep {
+  .ant-btn-primary {
+    animation: slideInLeft 0.5s ease-out;
+  }
+}

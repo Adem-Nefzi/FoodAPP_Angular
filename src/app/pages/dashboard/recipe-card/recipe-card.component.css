@@ -1,0 +1,71 @@
+:host {
+  display: block;
+}
+
+/* Enhanced animations with liquid glass effects */
+.group {
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+img {
+  transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* Advanced pulse animation for badges */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
+  }
+  50% {
+    opacity: 0.8;
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.6);
+  }
+}
+
+.animate-pulse {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* Slow spin animation for clock icon */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* Enhanced button hover effects */
+.hover-lift:hover {
+  transform: translateY(-8px) scale(1.03);
+}
+
+/* Liquid glass morphism effects */
+.glass {
+  backdrop-filter: blur(30px) saturate(200%);
+  -webkit-backdrop-filter: blur(30px) saturate(200%);
+}
+
+/* Enhanced focus states for accessibility */
+button:focus-visible {
+  outline: 2px solid #ff6b6b;
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+/* Shimmer animation for premium effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}

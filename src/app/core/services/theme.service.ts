@@ -40,13 +40,27 @@ export class ThemeService {
     if (typeof document === 'undefined') return;
 
     const body = document.body;
+    const html = document.documentElement;
+
+    // ✅ FIX: Apply your existing theme classes
     body.classList.remove('light-theme', 'dark-theme');
     body.classList.add(`${theme}-theme`);
 
+    // ✅ FIX: Also add/remove 'dark' class for Tailwind dark mode
+    if (theme === ThemeMode.DARK) {
+      html.classList.add('dark');
+      body.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+      body.classList.remove('dark');
+    }
+
+    // Existing functionality - update theme colors
     this.themeColors.set(
       theme === ThemeMode.DARK ? DARK_THEME_COLORS : LIGHT_THEME_COLORS
     );
 
+    // Existing functionality - save to localStorage
     localStorage.setItem(THEME_STORAGE_KEY, theme);
   }
 

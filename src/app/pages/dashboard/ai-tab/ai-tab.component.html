@@ -1,0 +1,44 @@
+<!-- AI CHAT COMPONENT -->
+<div class="max-w-4xl mx-auto space-y-6">
+  <div class="text-center space-y-4 py-12">
+    <span nz-icon nzType="robot" class="text-6xl text-blue-500 block"></span>
+    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+      AI Chef Assistant
+    </h2>
+    <p class="text-gray-600 dark:text-gray-400">
+      Get personalized cooking recommendations and tips
+    </p>
+  </div>
+
+  <!-- Chat Messages -->
+  <div class="space-y-4 h-96 overflow-y-auto">
+    <div class="flex gap-3">
+      <div
+        class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0"
+      >
+        <span nz-icon nzType="robot" class="text-white text-sm"></span>
+      </div>
+      <div class="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-4 max-w-xs">
+        <p class="text-sm text-gray-900 dark:text-white">
+          Hello! I'm your AI Chef. How can I help you cook today?
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Input Area -->
+  <div class="flex gap-2">
+    <input
+      type="text"
+      placeholder="Ask me anything about cooking..."
+      class="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500"
+    />
+    <button
+      nz-button
+      nzType="primary"
+      class="rounded-lg border-0 bg-blue-500 hover:bg-blue-600"
+    >
+      <span nz-icon nzType="send"></span>
+    </button>
+  </div>
+</div>

@@ -1,0 +1,230 @@
+<!-- 🍽️ MODERN 2025 RECIPE DASHBOARD - PREMIUM DESIGN -->
+<div
+  class="min-h-screen flex bg-white dark:bg-gray-950 relative overflow-hidden"
+>
+  <!-- Enhanced animated background with food-themed visual effects -->
+  <div class="absolute inset-0 overflow-hidden pointer-events-none">
+    <!-- Main gradient orbs -->
+    <div
+      class="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-green-300/20 to-emerald-300/10 rounded-full blur-3xl animate-float-slow"
+    ></div>
+    <div
+      class="absolute bottom-0 right-1/4 w-96 h-96 bg-gradient-to-tl from-orange-300/20 to-amber-300/10 rounded-full blur-3xl animate-float-slower"
+      style="animation-delay: 2s"
+    ></div>
+    <div
+      class="absolute top-1/2 right-0 w-80 h-80 bg-gradient-to-l from-red-300/15 to-pink-300/10 rounded-full blur-3xl animate-float-slow"
+      style="animation-delay: 4s"
+    ></div>
+
+    <!-- Additional floating elements -->
+    <div
+      class="absolute top-10 left-10 w-64 h-64 bg-gradient-to-r from-purple-300/10 to-blue-300/5 rounded-full blur-2xl animate-float-slower"
+      style="animation-delay: 1s"
+    ></div>
+    <div
+      class="absolute bottom-20 left-1/3 w-72 h-72 bg-gradient-to-tr from-yellow-300/10 to-red-300/5 rounded-full blur-2xl animate-float-slow"
+      style="animation-delay: 3s"
+    ></div>
+
+    <!-- Animated grid pattern -->
+    <div class="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]">
+      <div
+        class="absolute inset-0"
+        style="
+          background-image: linear-gradient(
+              rgba(34, 197, 94, 0.1) 1px,
+              transparent 1px
+            ),
+            linear-gradient(90deg, rgba(34, 197, 94, 0.1) 1px, transparent 1px);
+          background-size: 50px 50px;
+          background-position: 0 0;
+          animation: gridMove 30s linear infinite;
+        "
+      ></div>
+    </div>
+
+    <!-- Floating geometric shapes -->
+    <div
+      class="absolute top-32 right-32 w-24 h-24 border-2 border-green-300/30 dark:border-green-600/20 rounded-lg rotate-45 blur-sm animate-float"
+    ></div>
+    <div
+      class="absolute bottom-40 left-20 w-16 h-16 border-2 border-orange-300/30 dark:border-orange-600/20 rounded-full blur-sm animate-float"
+      style="animation-delay: 2s"
+    ></div>
+    <div
+      class="absolute top-1/3 left-1/4 w-20 h-20 border-2 border-purple-300/30 dark:border-purple-600/20 rounded-lg blur-sm animate-float"
+      style="animation-delay: 4s"
+    ></div>
+
+    <!-- Subtle food pattern dots -->
+    <div class="absolute inset-0 opacity-[0.02] dark:opacity-[0.01]">
+      <div
+        class="absolute inset-0"
+        style="
+          background-image: radial-gradient(
+            circle,
+            currentColor 1.5px,
+            transparent 1.5px
+          );
+          background-size: 60px 60px;
+          background-position: 0 0;
+        "
+      ></div>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="hidden lg:block fixed left-0 top-0 h-screen z-30 w-64">
+    <app-sidebar
+      [activeTab]="activeTab()"
+      (collapseToggled)="onSidebarCollapse($event)"
+    ></app-sidebar>
+  </div>
+
+  <!-- Main Content -->
+  <div
+    class="flex-1 min-h-screen transition-all duration-300 relative z-10"
+    [class.lg:ml-64]="!sidebarCollapsed()"
+  >
+    <!-- Mobile Header -->
+    <header
+      class="lg:hidden sticky top-0 z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 px-4 py-4"
+    >
+      <div class="flex items-center justify-between">
+        <button
+          (click)="openSidebar()"
+          class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
+        >
+          <span nz-icon nzType="menu" class="text-xl"></span>
+        </button>
+        <div class="flex items-center gap-2">
+          <div
+            class="w-8 h-8 rounded-lg bg-gradient-to-br from-green-500 to-emerald-600 flex items-center justify-center shadow-lg shadow-green-500/30"
+          >
+            <span
+              nz-icon
+              nzType="fire"
+              nzTheme="fill"
+              class="text-white text-sm"
+            ></span>
+          </div>
+          <span class="font-bold text-gray-900 dark:text-white">Savoria</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Mobile Sidebar Drawer -->
+    <nz-drawer
+      [nzVisible]="sidebarVisible()"
+      nzPlacement="left"
+      [nzWidth]="280"
+      (nzOnClose)="closeSidebar()"
+    >
+      <ng-container *nzDrawerContent>
+        <app-sidebar [activeTab]="activeTab()"></app-sidebar>
+      </ng-container>
+    </nz-drawer>
+
+    <!-- Main Content Area -->
+    <main class="p-4 lg:p-8">
+      <!-- Enhanced Page Header with New Recipe Button -->
+      <div class="mb-8">
+        <div
+          class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"
+        >
+          <div class="flex-1">
+            <!-- Enhanced heading with gradient text -->
+            <h1
+              class="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-gray-900 via-green-700 to-emerald-600 dark:from-white dark:via-green-300 dark:to-emerald-300 bg-clip-text text-transparent"
+            >
+              {{
+                activeTab() === "recipes"
+                  ? "Discover Recipes"
+                  : "AI Chef Assistant"
+              }}
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 mt-2 font-medium">
+              {{
+                activeTab() === "recipes"
+                  ? "Find your next favorite dish"
+                  : "Get cooking inspiration"
+              }}
+            </p>
+          </div>
+
+          <!-- New Recipe Button - Enhanced Placement -->
+        </div>
+
+        <!-- Enhanced Tab Navigation -->
+        <div class="relative mt-8">
+          <div class="flex gap-8 border-b border-gray-200 dark:border-gray-800">
+            <button
+              (click)="switchTab('recipes')"
+              class="px-4 py-3 font-medium text-sm border-b-2 transition-all relative group"
+              [class.text-green-600]="activeTab() === 'recipes'"
+              [class.border-green-600]="activeTab() === 'recipes'"
+              [class.text-gray-600]="activeTab() !== 'recipes'"
+              [class.border-transparent]="activeTab() !== 'recipes'"
+              [class.dark:text-gray-400]="activeTab() !== 'recipes'"
+            >
+              <span class="flex items-center gap-2">
+                <span
+                  nz-icon
+                  nzType="fire"
+                  [class.text-green-600]="activeTab() === 'recipes'"
+                ></span>
+                Recipes
+              </span>
+              <!-- Enhanced animated underline effect -->
+              <div
+                *ngIf="activeTab() === 'recipes'"
+                class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full shadow-lg shadow-green-500/30"
+              ></div>
+              <div
+                class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-gradient-to-r from-green-500/0 via-green-500/50 to-green-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </button>
+
+            <button
+              (click)="switchTab('ai')"
+              class="px-4 py-3 font-medium text-sm border-b-2 transition-all relative group"
+              [class.text-blue-600]="activeTab() === 'ai'"
+              [class.border-blue-600]="activeTab() === 'ai'"
+              [class.text-gray-600]="activeTab() !== 'ai'"
+              [class.border-transparent]="activeTab() !== 'ai'"
+              [class.dark:text-gray-400]="activeTab() !== 'ai'"
+            >
+              <span class="flex items-center gap-2">
+                <span
+                  nz-icon
+                  nzType="robot"
+                  [class.text-blue-600]="activeTab() === 'ai'"
+                ></span>
+                AI Chef
+              </span>
+              <div
+                *ngIf="activeTab() === 'ai'"
+                class="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-500 to-cyan-600 rounded-full shadow-lg shadow-blue-500/30"
+              ></div>
+              <div
+                class="absolute inset-x-0 -bottom-0.5 h-0.5 bg-gradient-to-r from-blue-500/0 via-blue-500/50 to-blue-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              ></div>
+            </button>
+          </div>
+
+          <!-- Background glow line -->
+          <div
+            class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-green-500/20 via-blue-500/20 to-transparent"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Content Area -->
+      <div class="min-h-[60vh]">
+        <app-recipes-list *ngIf="activeTab() === 'recipes'"></app-recipes-list>
+        <app-ai-chat *ngIf="activeTab() === 'ai'"></app-ai-chat>
+      </div>
+    </main>
+  </div>
+</div>

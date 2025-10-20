@@ -224,113 +224,221 @@
         <nz-dropdown-menu #userMenu="nzDropdownMenu">
           <ul
             nz-menu
-            class="rounded-xl overflow-hidden shadow-xl border backdrop-blur-sm min-w-[220px] py-2"
+            class="rounded-2xl overflow-hidden shadow-2xl border backdrop-blur-xl min-w-[260px] py-3 theme-transition"
             [ngClass]="
               isDarkMode
-                ? 'bg-gray-800/95 border-gray-700/50'
-                : 'bg-white/95 border-gray-200/50'
+                ? 'bg-gray-800/95 border-gray-600/30 shadow-amber-500/10'
+                : 'bg-white/95 border-gray-200/30 shadow-amber-500/5'
             "
           >
-            <!-- User Info Header -->
+            <!-- User Info Header with Gradient -->
             <li
               nz-menu-item
               [nzDisabled]="true"
-              class="!px-4 !py-3 border-b"
-              [ngClass]="
-                isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'
-              "
+              class="!px-6 !py-4 relative overflow-hidden"
             >
-              <div class="flex items-center space-x-3">
-                <nz-avatar
-                  [nzSize]="40"
-                  [nzSrc]="currentUser?.profilePicture || undefined"
-                  [nzIcon]="currentUser?.profilePicture ? undefined : 'user'"
-                  class="border-2"
-                  [ngClass]="
-                    isDarkMode ? 'border-amber-500/50' : 'border-amber-400/50'
-                  "
-                ></nz-avatar>
+              <!-- Background gradient -->
+              <div
+                class="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-orange-500/3 to-amber-500/5"
+              ></div>
+
+              <div class="flex items-center space-x-4 relative z-10">
+                <!-- Avatar with glow -->
+                <div class="relative">
+                  <nz-avatar
+                    [nzSize]="48"
+                    [nzSrc]="currentUser?.profilePicture || undefined"
+                    [nzIcon]="currentUser?.profilePicture ? undefined : 'user'"
+                    class="border-2 shadow-lg"
+                    [ngClass]="
+                      isDarkMode
+                        ? 'border-amber-500/60 shadow-amber-500/20'
+                        : 'border-amber-400/60 shadow-amber-400/20'
+                    "
+                  ></nz-avatar>
+                  <!-- Premium crown for admin -->
+                  <div
+                    *ngIf="isAdmin()"
+                    class="absolute -top-2 -right-2 w-5 h-5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg"
+                  >
+                    <span
+                      nz-icon
+                      nzType="crown"
+                      class="text-white text-xs"
+                    ></span>
+                  </div>
+                </div>
+
                 <div class="flex-1 min-w-0">
                   <div
-                    class="text-sm font-semibold truncate"
-                    [ngClass]="
-                      isDarkMode ? 'text-amber-900' : 'text-amber-900/80'
-                    "
+                    class="text-base font-bold truncate mb-1"
+                    [ngClass]="isDarkMode ? 'text-amber-300' : 'text-amber-700'"
                   >
                     {{ currentUser?.username }}
                   </div>
                   <div
-                    class="text-md truncate mt-1"
+                    class="text-sm truncate theme-transition"
                     [ngClass]="
-                      isDarkMode ? 'text-amber-800/80' : 'text-amber-600/80'
+                      isDarkMode ? 'text-amber-400/80' : 'text-amber-600/80'
                     "
                   >
                     {{ currentUser?.email }}
+                  </div>
+                  <div class="flex items-center gap-2 mt-2">
+                    <div
+                      class="px-2 py-1 rounded-full text-xs font-semibold theme-transition"
+                      [ngClass]="
+                        isDarkMode
+                          ? 'bg-amber-500/20 text-amber-300'
+                          : 'bg-amber-500/15 text-amber-700'
+                      "
+                    >
+                      {{ currentUser?.role || "User" }}
+                    </div>
+                    <div
+                      class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
+                    ></div>
                   </div>
                 </div>
               </div>
             </li>
 
-            <!-- Dashboard Link -->
-            <li
-              nz-menu-item
-              routerLink="/dashboard"
-              class="!px-4 !py-3 theme-transition hover:scale-[1.02]"
-            >
-              <span
-                nz-icon
-                nzType="dashboard"
-                class="mr-3 text-amber-500"
-              ></span>
-              <span class="font-medium text-gray-600">My Kitchen</span>
+            <!-- Divider with gradient -->
+            <li nz-menu-divider class="!my-3 relative">
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-transparent via-amber-500/20 to-transparent"
+              ></div>
             </li>
 
-            <!-- Profile Link -->
-            <li
-              nz-menu-item
-              routerLink="/profile"
-              class="!px-4 !py-3 theme-transition hover:scale-[1.02]"
+            <!-- Menu Items -->
+            <ng-container
+              *ngFor="
+                let item of [
+                  {
+                    icon: 'dashboard',
+                    label: 'My Kitchen',
+                    color: 'amber',
+                    route: '/dashboard'
+                  },
+                  {
+                    icon: 'user',
+                    label: 'My Profile',
+                    color: 'blue',
+                    route: '/profile'
+                  },
+                  {
+                    icon: 'setting',
+                    label: 'Settings',
+                    color: 'purple',
+                    route: '/settings'
+                  },
+                  {
+                    icon: 'crown',
+                    label: 'Admin Panel',
+                    color: 'gold',
+                    route: '/admin'
+                  }
+                ]
+              "
             >
-              <span nz-icon nzType="user" class="mr-3 text-blue-500"></span>
-              <span class="font-medium text-gray-600">My Profile</span>
-            </li>
+              <li
+                *ngIf="item.label !== 'Admin Panel' || isAdmin()"
+                nz-menu-item
+                [routerLink]="item.route"
+                class="!px-6 !py-4 theme-transition group relative overflow-hidden"
+                [ngClass]="
+                  isDarkMode ? 'hover:bg-gray-700/50' : 'hover:bg-gray-100/60'
+                "
+              >
+                <!-- Hover background effect -->
+                <div
+                  class="absolute inset-0 bg-gradient-to-r from-amber-500/0 via-amber-500/5 to-amber-500/0 opacity-0 group-hover:opacity-100 theme-transition"
+                ></div>
 
-            <!-- Settings Link -->
-            <li
-              nz-menu-item
-              routerLink="/settings"
-              class="!px-4 !py-3 theme-transition hover:scale-[1.02]"
-            >
-              <span
-                nz-icon
-                nzType="setting"
-                class="mr-3 text-purple-500"
-              ></span>
-              <span class="font-medium text-gray-600">Settings</span>
-            </li>
+                <!-- Icon with color coding -->
+                <span
+                  nz-icon
+                  [nzType]="item.icon"
+                  class="mr-4 text-lg theme-transition transform group-hover:scale-125 group-hover:rotate-12"
+                  [ngClass]="{
+                    'text-amber-500': item.color === 'amber',
+                    'text-blue-500': item.color === 'blue',
+                    'text-purple-500': item.color === 'purple',
+                    'text-yellow-500': item.color === 'gold'
+                  }"
+                ></span>
+
+                <!-- Label with hover effect -->
+                <span
+                  class="font-semibold theme-transition transform group-hover:translate-x-2"
+                  [ngClass]="
+                    isDarkMode
+                      ? 'text-gray-200 group-hover:text-amber-300'
+                      : 'text-gray-700 group-hover:text-amber-700'
+                  "
+                >
+                  {{ item.label }}
+                </span>
+
+                <!-- Arrow indicator -->
+                <span
+                  nz-icon
+                  nzType="right"
+                  class="ml-auto text-xs opacity-0 group-hover:opacity-100 theme-transition transform -translate-x-2 group-hover:translate-x-0"
+                  [ngClass]="isDarkMode ? 'text-amber-400' : 'text-amber-500'"
+                ></span>
+              </li>
+            </ng-container>
 
             <!-- Divider -->
             <li
               nz-menu-divider
-              class="!my-2"
+              class="!my-3"
               [ngClass]="isDarkMode ? '!bg-gray-700/50' : '!bg-gray-200/50'"
             ></li>
 
-            <!-- Logout -->
+            <!-- Logout with dramatic hover effect -->
             <li
               nz-menu-item
               (click)="logout()"
-              class="!px-4 !py-3 theme-transition hover:scale-[1.02] group"
+              class="!px-6 !py-4 theme-transition group relative overflow-hidden"
+              [ngClass]="
+                isDarkMode ? 'hover:bg-red-500/20' : 'hover:bg-red-500/10'
+              "
             >
+              <!-- Animated background -->
+              <div
+                class="absolute inset-0 bg-gradient-to-r from-red-500/0 via-red-500/10 to-red-500/0 opacity-0 group-hover:opacity-100 theme-transition"
+              ></div>
+
+              <!-- Icon with dramatic animation -->
               <span
                 nz-icon
                 nzType="logout"
-                class="mr-3 text-red-500 group-hover:scale-110 theme-transition"
+                class="mr-4 text-lg theme-transition transform group-hover:scale-125 group-hover:-rotate-45 group-hover:translate-x-1"
+                [ngClass]="
+                  isDarkMode
+                    ? 'text-red-400 group-hover:text-red-300'
+                    : 'text-red-500 group-hover:text-red-600'
+                "
               ></span>
+
+              <!-- Text with glow -->
               <span
-                class="font-medium text-red-500 group-hover:text-red-600 theme-transition"
-                >Sign Out</span
+                class="font-semibold theme-transition transform group-hover:translate-x-2"
+                [ngClass]="
+                  isDarkMode
+                    ? 'text-red-400 group-hover:text-red-300'
+                    : 'text-red-500 group-hover:text-red-600'
+                "
               >
+                Sign Out
+              </span>
+
+              <!-- Pulse effect -->
+              <div
+                class="absolute inset-0 border-2 border-red-500/0 rounded-xl group-hover:border-red-500/30 theme-transition group-hover:animate-pulse"
+              ></div>
             </li>
           </ul>
         </nz-dropdown-menu>

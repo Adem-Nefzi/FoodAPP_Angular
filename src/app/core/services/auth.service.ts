@@ -34,10 +34,7 @@ export class AuthService {
     // Check if user is already logged in
     this.checkAuthStatus();
   }
-
-  /**
-   * Check if user is authenticated on app init
-   */
+  // Check authentication status on service initialization
   private checkAuthStatus(): void {
     const token = this.getToken();
     const userStr = localStorage.getItem('currentUser');
@@ -53,10 +50,7 @@ export class AuthService {
       }
     }
   }
-
-  /**
-   * Login user
-   */
+  // Login user
   login(credentials: LoginRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.API_URL}/login`, credentials)
@@ -88,9 +82,7 @@ export class AuthService {
       );
   }
 
-  /**
-   * Register new user
-   */
+  // Register user
   register(userData: RegisterRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.API_URL}/register`, userData)
@@ -122,10 +114,8 @@ export class AuthService {
       );
   }
 
-  /**
-   * Logout user
-   */
-  logout(): Observable<any> {
+  // Logout user
+  public logout(): Observable<any> {
     const token = this.getToken();
 
     // If no token, just clear local data
@@ -151,9 +141,7 @@ export class AuthService {
     );
   }
 
-  /**
-   * Clear authentication data
-   */
+  // Clear authentication data
   private clearAuthData(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('currentUser');
@@ -163,45 +151,38 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
-  /**
-   * Get stored token
-   */
+  // Get stored token
   getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  /**
-   * Store token
-   */
+  // Store token
   private setToken(token: string): void {
     localStorage.setItem('token', token);
   }
 
-  /**
-   * Check if user is authenticated
-   */
+  // Check if user is logged in
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
 
-  /**
-   * Get current user
-   */
+  // Get current user
   getCurrentUser(): User | null {
     return this.currentUserSubject.value;
   }
 
-  /**
-   * Check if user is admin
-   */
+  // Check if user is admin
   isAdmin(): boolean {
     const user = this.getCurrentUser();
     return user?.role === 'ADMIN';
   }
 
-  /**
-   * Handle HTTP errors
-   */
+  isUser(): boolean {
+    const user = this.getCurrentUser();
+    return user?.role === 'USER';
+  }
+
+  // Handle HTTP errors
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'An error occurred. Please try again.';
 

@@ -39,6 +39,9 @@ export class NavbarComponent {
   get currentUser() {
     return this.authService.currentUser();
   }
+  isAdmin(): boolean {
+    return this.authService.isAdmin();
+  }
 
   toggleTheme(): void {
     this.themeService.toggleTheme();
