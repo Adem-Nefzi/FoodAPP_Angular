@@ -1,22 +1,23 @@
-<!-- 🍽️ PROFESSIONAL 2025 LOGIN FORM - IMPROVED -->
+<!-- 🍽️ ULTRA-PREMIUM 2025 LOGIN - STUNNING EDITION -->
 <div
   class="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
+  (mousemove)="onMouseMove($event)"
 >
-  <!-- Enhanced Background -->
+  <!-- 🎨 ENHANCED PREMIUM BACKGROUND -->
   <div class="absolute inset-0 -z-10">
-    <!-- Main Gradient -->
+    <!-- Animated Mesh Gradient -->
     <div
-      class="absolute inset-0 theme-transition"
+      class="absolute inset-0 theme-transition mesh-gradient"
       [ngClass]="
         isDarkMode
           ? 'bg-gradient-to-br from-gray-900 via-[#0F0F0F] to-gray-800'
-          : 'bg-gradient-to-br from-amber-50 via-white to-orange-50'
+          : 'bg-gradient-to-br from-amber-50 via-orange-50 to-red-50'
       "
     ></div>
 
-    <!-- Grid Pattern -->
+    <!-- Animated Grid Pattern -->
     <div
-      class="absolute inset-0 opacity-[0.015]"
+      class="absolute inset-0 opacity-[0.02] animate-grid-flow"
       [style.backgroundImage]="
         'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(to right, currentColor 1px, transparent 1px)'
       "
@@ -24,34 +25,119 @@
       [style.color]="isDarkMode ? '#ffffff' : '#000000'"
     ></div>
 
-    <!-- Subtle Floating Orbs -->
+    <!-- 🌟 Dynamic Floating Orbs with Parallax -->
     <div
-      class="absolute top-1/4 -right-20 w-80 h-80 rounded-full opacity-10 blur-[100px] animate-float-slow"
-      [style.background]="themeService.colors().primary"
+      class="absolute top-1/4 -right-20 w-96 h-96 rounded-full opacity-20 blur-[120px] animate-float-slow parallax-orb"
+      [style.background]="
+        'radial-gradient(circle, ' +
+        themeService.colors().primary +
+        ', transparent)'
+      "
+      [style.transform]="
+        'translate(' + mouseX * 0.02 + 'px, ' + mouseY * 0.02 + 'px)'
+      "
     ></div>
 
     <div
-      class="absolute bottom-1/3 -left-20 w-72 h-72 rounded-full opacity-8 blur-[90px] animate-float"
-      [style.background]="themeService.colors().accent"
+      class="absolute bottom-1/3 -left-20 w-80 h-80 rounded-full opacity-15 blur-[100px] animate-float parallax-orb"
+      [style.background]="
+        'radial-gradient(circle, ' +
+        themeService.colors().accent +
+        ', transparent)'
+      "
+      [style.transform]="
+        'translate(' + mouseX * -0.03 + 'px, ' + mouseY * -0.03 + 'px)'
+      "
     ></div>
+
+    <div
+      class="absolute top-1/2 right-1/4 w-64 h-64 rounded-full opacity-10 blur-[80px] animate-pulse-slow"
+      [style.background]="
+        'radial-gradient(circle, ' +
+        themeService.colors().secondary +
+        ', transparent)'
+      "
+    ></div>
+
+    <!-- 🍽️ Floating Food Icons -->
+    <div class="food-particles">
+      <span class="food-icon food-1" [ngClass]="isDarkMode ? 'dark' : 'light'"
+        >🍕</span
+      >
+      <span class="food-icon food-2" [ngClass]="isDarkMode ? 'dark' : 'light'"
+        >🍜</span
+      >
+      <span class="food-icon food-3" [ngClass]="isDarkMode ? 'dark' : 'light'"
+        >🥗</span
+      >
+      <span class="food-icon food-4" [ngClass]="isDarkMode ? 'dark' : 'light'"
+        >🍰</span
+      >
+      <span class="food-icon food-5" [ngClass]="isDarkMode ? 'dark' : 'light'"
+        >🍔</span
+      >
+      <span class="food-icon food-6" [ngClass]="isDarkMode ? 'dark' : 'light'"
+        >🍱</span
+      >
+    </div>
   </div>
 
   <div class="w-full max-w-sm">
-    <!-- Professional Card -->
+    <!-- 🎭 3D Tilt Card with Premium Glass Effect -->
     <div
-      class="backdrop-blur-xl rounded-3xl p-8 theme-transition border animate-fade-in shadow-2xl"
+      #loginCard
+      class="login-card backdrop-blur-2xl rounded-3xl p-8 theme-transition border animate-fade-in shadow-2xl relative overflow-hidden"
       [ngClass]="
         isDarkMode
-          ? 'bg-gray-900/70 border-gray-700/50'
-          : 'bg-white/80 border-gray-200/50'
+          ? 'bg-gray-900/80 border-gray-700/50'
+          : 'bg-white/90 border-gray-200/50'
+      "
+      [style.transform]="
+        'perspective(1000px) rotateX(' +
+        tiltY +
+        'deg) rotateY(' +
+        tiltX +
+        'deg) translateZ(10px)'
       "
     >
-      <!-- Header Section -->
-      <div class="text-center mb-8 animate-slide-down">
+      <!-- ✨ Glass Reflection Overlay -->
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"
+      ></div>
+
+      <!-- 🎯 Trust Badge -->
+      <div
+        class="absolute top-4 right-4 flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full backdrop-blur-md animate-slide-down"
+        [ngClass]="
+          isDarkMode
+            ? 'bg-green-500/20 text-green-300'
+            : 'bg-green-500/10 text-green-700'
+        "
+      >
+        <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+        <span>Secure Login</span>
+      </div>
+
+      <!-- Header Section with Enhanced Logo -->
+      <div class="text-center mb-8 animate-slide-down relative z-10">
         <div class="flex justify-center mb-4">
-          <div class="relative">
+          <div class="relative group">
+            <!-- Animated Ring -->
             <div
-              class="w-14 h-14 rounded-xl flex items-center justify-center shadow-lg"
+              class="absolute inset-0 rounded-2xl animate-spin-slow"
+              [style.background]="
+                'conic-gradient(from 0deg, ' +
+                themeService.colors().primary +
+                ', ' +
+                themeService.colors().accent +
+                ', ' +
+                themeService.colors().primary +
+                ')'
+              "
+              style="padding: 2px"
+            ></div>
+            <div
+              class="relative w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl transform group-hover:scale-110 transition-transform duration-500"
               [style.background]="
                 'linear-gradient(135deg, ' +
                 themeService.colors().primary +
@@ -64,24 +150,133 @@
                 nz-icon
                 nzType="fire"
                 nzTheme="fill"
-                class="text-white text-xl"
+                class="text-white text-2xl animate-pulse-slow"
               ></span>
             </div>
           </div>
         </div>
 
         <h1
-          class="font-display font-bold text-2xl mb-2 leading-tight"
-          [ngClass]="isDarkMode ? 'text-white' : 'text-gray-900'"
+          class="font-display font-bold text-3xl mb-2 leading-tight bg-gradient-to-r bg-clip-text text-transparent animate-gradient"
+          [ngClass]="
+            isDarkMode
+              ? 'from-white via-amber-200 to-orange-300'
+              : 'from-gray-900 via-amber-700 to-orange-600'
+          "
         >
           Welcome Back
         </h1>
         <p
-          class="text-sm"
+          class="text-sm font-medium"
           [ngClass]="isDarkMode ? 'text-gray-400' : 'text-gray-600'"
         >
-          Sign in to your account
+          Sign in to continue your culinary journey ✨
         </p>
+
+        <!-- 👥 Social Proof -->
+        <div
+          class="mt-4 flex items-center justify-center gap-2 text-xs animate-fade-in-delayed"
+        >
+          <div class="flex -space-x-2">
+            <div
+              class="w-6 h-6 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 border-2 border-white dark:border-gray-900"
+            ></div>
+            <div
+              class="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 border-2 border-white dark:border-gray-900"
+            ></div>
+            <div
+              class="w-6 h-6 rounded-full bg-gradient-to-br from-blue-400 to-cyan-500 border-2 border-white dark:border-gray-900"
+            ></div>
+          </div>
+          <span [ngClass]="isDarkMode ? 'text-gray-500' : 'text-gray-500'">
+            Join
+            <strong
+              class="font-bold"
+              [style.color]="themeService.colors().primary"
+              >Other Chefs</strong
+            >
+          </span>
+        </div>
+      </div>
+
+      <!-- 🎨 Enhanced Google Button -->
+      <div class="mb-6 animate-slide-up">
+        <button
+          type="button"
+          (click)="onGoogleSignIn()"
+          [disabled]="isGoogleLoading"
+          class="google-btn w-full h-14 rounded-xl border theme-transition flex items-center justify-center space-x-3 font-semibold hover:scale-[1.02] active:scale-[0.95] transition-all duration-300 relative overflow-hidden group"
+          [ngClass]="
+            isDarkMode
+              ? 'bg-white/10 border-gray-600 hover:bg-white/20 text-white hover:border-gray-500'
+              : 'bg-white border-gray-300 hover:bg-gray-50 text-gray-900 shadow-lg hover:shadow-xl'
+          "
+        >
+          <!-- Shimmer Effect -->
+          <div
+            class="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          ></div>
+          <!-- Google Logo SVG -->
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M19.6 10.227c0-.709-.064-1.39-.182-2.045H10v3.868h5.382a4.6 4.6 0 01-1.996 3.018v2.51h3.232c1.891-1.742 2.982-4.305 2.982-7.35z"
+              fill="#4285F4"
+            />
+            <path
+              d="M10 20c2.7 0 4.964-.895 6.618-2.423l-3.232-2.509c-.895.6-2.04.955-3.386.955-2.605 0-4.81-1.76-5.595-4.123H1.064v2.59A9.996 9.996 0 0010 20z"
+              fill="#34A853"
+            />
+            <path
+              d="M4.405 11.9c-.2-.6-.314-1.24-.314-1.9 0-.66.114-1.3.314-1.9V5.51H1.064A9.996 9.996 0 000 10c0 1.614.386 3.14 1.064 4.49l3.34-2.59z"
+              fill="#FBBC05"
+            />
+            <path
+              d="M10 3.977c1.468 0 2.786.505 3.823 1.496l2.868-2.868C14.959.99 12.695 0 10 0 6.09 0 2.71 2.24 1.064 5.51l3.34 2.59C5.19 5.736 7.395 3.977 10 3.977z"
+              fill="#EA4335"
+            />
+          </svg>
+
+          <!-- Button Text -->
+          <span
+            class="relative z-10 transform group-hover:scale-105 transition-transform"
+          >
+            {{ isGoogleLoading ? "Signing in..." : "Continue with Google" }}
+          </span>
+
+          <!-- Loading Spinner with Chef Hat -->
+          <span
+            *ngIf="isGoogleLoading"
+            class="text-xl animate-bounce relative z-10"
+            >👨‍🍳</span
+          >
+        </button>
+      </div>
+
+      <!-- ✨ Enhanced Divider with Shine -->
+      <div class="flex items-center my-6 relative">
+        <div
+          class="flex-1 h-px bg-gradient-to-r from-transparent via-current to-transparent opacity-20"
+        ></div>
+        <span
+          class="px-4 text-xs font-bold uppercase tracking-wider relative"
+          [ngClass]="isDarkMode ? 'text-gray-400' : 'text-gray-500'"
+        >
+          <span class="relative z-10">or continue with email</span>
+          <span
+            class="absolute inset-0 blur-sm"
+            [style.color]="themeService.colors().primary"
+            >or continue with email</span
+          >
+        </span>
+        <div
+          class="flex-1 h-px bg-gradient-to-r from-current to-transparent opacity-20"
+        ></div>
       </div>
 
       <!-- Professional Form - IMPROVED -->
@@ -91,12 +286,18 @@
         (ngSubmit)="onSubmit()"
         class="animate-slide-up space-y-5"
       >
-        <!-- Email Field -->
-        <div class="space-y-2">
+        <!-- 📧 Enhanced Email Field with Icon -->
+        <div class="space-y-2 input-group">
           <label
-            class="text-sm font-medium block"
+            class="text-sm font-semibold flex items-center gap-2"
             [ngClass]="isDarkMode ? 'text-gray-300' : 'text-gray-700'"
           >
+            <span
+              nz-icon
+              nzType="mail"
+              class="text-base"
+              [style.color]="themeService.colors().primary"
+            ></span>
             Email Address
           </label>
           <nz-form-item>
@@ -105,20 +306,42 @@
               [nzErrorTip]="emailErrorTpl"
               nzHasFeedback
             >
-              <input
-                type="email"
-                nz-input
-                formControlName="email"
-                placeholder="Enter your email"
-                class="w-full rounded-lg py-3 px-4 theme-transition"
-                [ngClass]="
-                  isDarkMode
-                    ? 'bg-gray-800/80  text-gray-400 placeholder-gray-500 border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/20'
-                    : 'bg-white/90 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/20'
-                "
-                style="height: 48px"
-                (blur)="markEmailAsTouched()"
-              />
+              <div class="relative group">
+                <input
+                  type="email"
+                  nz-input
+                  formControlName="email"
+                  placeholder="chef@savoria.com"
+                  class="premium-input w-full rounded-xl py-4 px-5 pl-12 theme-transition font-medium"
+                  [ngClass]="
+                    isDarkMode
+                      ? 'bg-gray-800/60 text-white placeholder-gray-500 border-gray-600 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30'
+                      : 'bg-white/80 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30'
+                  "
+                  (blur)="markEmailAsTouched()"
+                  (focus)="onEmailFocus()"
+                />
+                <!-- Icon Prefix -->
+                <span
+                  nz-icon
+                  nzType="user"
+                  class="absolute left-4 top-1/2 -translate-y-1/2 text-lg transition-all duration-300"
+                  [ngClass]="
+                    isEmailFocused
+                      ? 'text-amber-500 scale-110'
+                      : isDarkMode
+                      ? 'text-gray-500'
+                      : 'text-gray-400'
+                  "
+                ></span>
+                <!-- Focus Glow -->
+                <div
+                  class="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none"
+                  [style.boxShadow]="
+                    '0 0 0 4px ' + themeService.colors().primary + '10'
+                  "
+                ></div>
+              </div>
             </nz-form-control>
           </nz-form-item>
           <ng-template #emailErrorTpl let-control>
@@ -130,20 +353,29 @@
           </ng-template>
         </div>
 
-        <!-- Password Field - IMPROVED TOGGLE POSITION -->
-        <div class="space-y-2">
+        <!-- 🔒 Enhanced Password Field -->
+        <div class="space-y-2 input-group">
           <div class="flex items-center justify-between">
             <label
-              class="text-sm font-medium block"
+              class="text-sm font-semibold flex items-center gap-2"
               [ngClass]="isDarkMode ? 'text-gray-300' : 'text-gray-700'"
             >
+              <span
+                nz-icon
+                nzType="lock"
+                class="text-base"
+                [style.color]="themeService.colors().primary"
+              ></span>
               Password
             </label>
             <a
-              class="text-xs font-medium theme-transition hover:opacity-70"
+              class="text-xs font-semibold theme-transition hover:scale-105 cursor-pointer relative group"
               [style.color]="themeService.colors().primary"
             >
-              Forgot password?
+              <span class="relative z-10">Forgot password?</span>
+              <span
+                class="absolute inset-x-0 bottom-0 h-px bg-current transform scale-x-0 group-hover:scale-x-100 transition-transform"
+              ></span>
             </a>
           </div>
           <nz-form-item>
@@ -152,38 +384,59 @@
               [nzErrorTip]="passwordErrorTpl"
               nzHasFeedback
             >
-              <div class="relative">
+              <div class="relative group">
                 <input
                   [type]="passwordVisible ? 'text' : 'password'"
                   nz-input
                   formControlName="password"
-                  placeholder="Enter your password"
-                  class="w-full rounded-lg py-3 px-4 pr-16 theme-transition"
+                  placeholder="Enter your secret recipe"
+                  class="premium-input w-full rounded-xl py-4 px-5 pl-12 pr-12 theme-transition font-medium"
                   [ngClass]="
                     isDarkMode
-                      ? 'bg-gray-800/80 text-gray-400 placeholder-gray-500 border-gray-600 focus:border-primaryfocus:ring-2 focus:ring-primary/20'
-                      : 'bg-white/90 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-primaryfocus:ring-2 focus:ring-primary/20'
+                      ? 'bg-gray-800/60 text-white placeholder-gray-500 border-gray-600 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30'
+                      : 'bg-white/80 text-gray-900 placeholder-gray-400 border-gray-300 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/30'
                   "
-                  style="height: 48px"
                   (blur)="markPasswordAsTouched()"
+                  (focus)="onPasswordFocus()"
                 />
-                <!-- Password Toggle Button - Moved left to avoid checkmark -->
+                <!-- Lock Icon -->
+                <span
+                  nz-icon
+                  nzType="safety-certificate"
+                  class="absolute left-4 top-1/2 -translate-y-1/2 text-lg transition-all duration-300"
+                  [ngClass]="
+                    isPasswordFocused
+                      ? 'text-amber-500 scale-110'
+                      : isDarkMode
+                      ? 'text-gray-500'
+                      : 'text-gray-400'
+                  "
+                ></span>
+                <!-- Enhanced Password Toggle with Blink Animation -->
                 <button
                   type="button"
-                  (click)="passwordVisible = !passwordVisible"
-                  class="absolute right-10 top-1/2 -translate-y-1/2 theme-transition hover:opacity-70 p-1 rounded"
+                  (click)="togglePasswordVisibility()"
+                  class="absolute right-4 top-1/2 -translate-y-1/2 theme-transition hover:scale-110 p-2 rounded-lg z-10"
                   [ngClass]="
                     isDarkMode
-                      ? 'text-gray-400 hover:bg-gray-700'
-                      : 'text-gray-500 hover:bg-gray-100'
+                      ? 'text-gray-400 hover:bg-gray-700 hover:text-amber-400'
+                      : 'text-gray-500 hover:bg-gray-100 hover:text-amber-600'
                   "
                 >
                   <span
                     nz-icon
                     [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
-                    class="text-base"
+                    class="text-lg transition-transform duration-300"
+                    [class.animate-blink]="passwordVisible"
                   ></span>
                 </button>
+                <!-- Focus Glow -->
+                <div
+                  class="absolute inset-0 rounded-xl opacity-0 group-focus-within:opacity-100 transition-opacity pointer-events-none"
+                  [style.boxShadow]="
+                    '0 0 0 4px ' + themeService.colors().primary + '10'
+                  "
+                ></div>
               </div>
             </nz-form-control>
           </nz-form-item>
@@ -196,26 +449,32 @@
           </ng-template>
         </div>
 
-        <!-- Remember Me -->
-        <div class="flex items-center">
+        <!-- ✅ Enhanced Remember Me Checkbox -->
+        <div class="flex items-center group cursor-pointer">
           <label
             nz-checkbox
             formControlName="remember"
+            class="flex items-center gap-2 cursor-pointer"
             [ngClass]="isDarkMode ? 'text-gray-300' : 'text-gray-700'"
           >
-            <span class="text-sm">Keep me signed in</span>
+            <span
+              class="text-sm font-medium group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors"
+            >
+              Keep me signed in for 30 days
+            </span>
           </label>
         </div>
 
-        <!-- Submit Button - IMPROVED STYLING -->
+        <!-- 🚀 PREMIUM Submit Button with Particle Effect -->
         <button
           nz-button
           nzType="primary"
           nzSize="large"
           nzBlock
+          type="submit"
           [nzLoading]="isLoading"
           [disabled]="loginForm.invalid"
-          class="rounded-xl h-12 font-semibold mt-2 theme-transition relative overflow-hidden group"
+          class="premium-btn rounded-xl h-14 font-bold mt-2 theme-transition relative overflow-hidden group"
           [style.background]="
             loginForm.invalid
               ? isDarkMode
@@ -223,63 +482,134 @@
                 : '#D1D5DB'
               : 'linear-gradient(135deg, ' +
                 themeService.colors().primary +
-                ', ' +
+                ' 0%, ' +
                 themeService.colors().accent +
-                ')'
+                ' 50%, ' +
+                themeService.colors().primary +
+                ' 100%)'
           "
+          [style.backgroundSize]="'200% 100%'"
           [style.border]="'none'"
           [style.boxShadow]="
             loginForm.invalid
               ? 'none'
-              : '0 8px 25px ' + themeService.colors().primary + '50'
+              : '0 10px 30px ' +
+                themeService.colors().primary +
+                '60, 0 0 0 1px ' +
+                themeService.colors().primary +
+                '20 inset'
           "
         >
-          <!-- Animated background effect -->
+          <!-- Ripple Effect Container -->
+          <div class="ripple-container"></div>
+
+          <!-- Animated gradient background -->
           <div
-            class="absolute inset-0 bg-white/0 group-hover:bg-white/10 theme-transition"
+            class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent group-hover:translate-x-full transition-transform duration-1000"
+            style="transform: translateX(-100%)"
           ></div>
 
           <span
-            class="flex items-center justify-center space-x-2 relative z-10"
+            class="flex items-center justify-center space-x-3 relative z-10"
           >
+            <!-- Loading State with Chef -->
+            <span *ngIf="isLoading" class="text-2xl animate-bounce">👨‍🍳</span>
+
+            <!-- Normal State -->
             <span
               nz-icon
-              nzType="login"
-              nzTheme="outline"
+              nzType="rocket"
+              nzTheme="fill"
               *ngIf="!isLoading"
-              class="group-hover:scale-110 theme-transition"
+              class="text-xl group-hover:scale-125 group-hover:rotate-12 transition-all duration-300"
             ></span>
-            <span class="font-semibold tracking-wide">
-              {{ isLoading ? "Signing In..." : "Sign In" }}
+            <span class="font-bold tracking-wide text-base">
+              {{
+                isLoading
+                  ? "Cooking your session..."
+                  : "Sign In & Start Cooking"
+              }}
             </span>
           </span>
 
-          <!-- Shine effect -->
+          <!-- Shimmer effect on hover -->
           <div
-            class="absolute inset-0 -skew-x-12 -translate-x-full group-hover:translate-x-full theme-transition duration-700 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+            class="absolute inset-0 -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000 bg-gradient-to-r from-transparent via-white/30 to-transparent"
           ></div>
+
+          <!-- Particle burst on click -->
+          <div class="particles-container"></div>
         </button>
 
-        <!-- Registration Link -->
+        <!-- 🎨 Enhanced Registration Link -->
         <div
-          class="text-center pt-6 border-t"
-          [ngClass]="isDarkMode ? 'border-gray-700' : 'border-gray-200'"
+          class="text-center pt-6 border-t relative"
+          [ngClass]="isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'"
         >
-          <span
-            class="text-sm"
-            [ngClass]="isDarkMode ? 'text-gray-400' : 'text-gray-500'"
-          >
-            Don't have an account?
-          </span>
-          <a
-            (click)="navigateToRegister()"
-            class="text-sm font-semibold ml-1 cursor-pointer theme-transition hover:opacity-70"
-            [style.color]="themeService.colors().primary"
-          >
-            Create account
-          </a>
+          <div class="flex items-center justify-center gap-2">
+            <span
+              class="text-sm font-medium"
+              [ngClass]="isDarkMode ? 'text-gray-400' : 'text-gray-600'"
+            >
+              New to Savoria?
+            </span>
+            <a
+              (click)="navigateToRegister()"
+              class="text-sm font-bold cursor-pointer theme-transition hover:scale-105 inline-flex items-center gap-1 group relative"
+              [style.color]="themeService.colors().primary"
+            >
+              <span class="relative">
+                Create account
+                <span
+                  class="absolute inset-x-0 -bottom-1 h-0.5 bg-current transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"
+                ></span>
+              </span>
+              <span
+                nz-icon
+                nzType="arrow-right"
+                class="text-xs transform group-hover:translate-x-1 transition-transform"
+              ></span>
+            </a>
+          </div>
         </div>
       </form>
+
+      <!-- ⭐ Bottom Trust Indicators -->
+      <div
+        class="mt-6 pt-6 border-t flex items-center justify-center gap-6 text-xs"
+        [ngClass]="isDarkMode ? 'border-gray-700/50' : 'border-gray-200/50'"
+      >
+        <div
+          class="flex items-center gap-1.5"
+          [ngClass]="isDarkMode ? 'text-gray-500' : 'text-gray-600'"
+        >
+          <span
+            nz-icon
+            nzType="check-circle"
+            nzTheme="fill"
+            class="text-green-500"
+          ></span>
+          <span>SSL Secured</span>
+        </div>
+        <div
+          class="flex items-center gap-1.5"
+          [ngClass]="isDarkMode ? 'text-gray-500' : 'text-gray-600'"
+        >
+          <span
+            nz-icon
+            nzType="safety-certificate"
+            nzTheme="fill"
+            class="text-blue-500"
+          ></span>
+          <span>GDPR Compliant</span>
+        </div>
+      </div>
     </div>
   </div>
+
+  <!-- 🎉 Success Confetti (hidden by default) -->
+  <div
+    id="confetti-canvas"
+    class="fixed inset-0 pointer-events-none z-50"
+  ></div>
 </div>

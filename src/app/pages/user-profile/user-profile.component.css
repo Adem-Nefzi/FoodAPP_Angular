@@ -1,0 +1,347 @@
+/* 🎨 STUNNING USER PROFILE ANIMATIONS & STYLES */
+
+/* Floating Animations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(5deg);
+  }
+}
+
+@keyframes float-slow {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.05);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+  }
+}
+
+@keyframes float-slower {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  50% {
+    transform: translate(-30px, 30px) rotate(3deg);
+  }
+}
+
+/* Spinning Animation for Avatar Ring */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse Glow Effect */
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+/* Fade In Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pattern Move Animation */
+@keyframes patternMove {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100px 100px;
+  }
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Apply Animations */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-slow {
+  animation: float-slow 8s ease-in-out infinite;
+}
+
+.animate-float-slower {
+  animation: float-slower 10s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 8s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s ease-out forwards;
+}
+
+/* Custom Modal Styles */
+:host ::ng-deep .delete-account-modal,
+:host ::ng-deep .password-prompt-modal {
+  .ant-modal-content {
+    @apply rounded-3xl border border-gray-200 dark:border-gray-700 overflow-hidden;
+  }
+
+  .ant-modal-header {
+    @apply bg-gradient-to-r from-red-50 to-pink-50 dark:from-red-900/20 dark:to-pink-900/20 border-b border-red-200 dark:border-red-800;
+  }
+
+  .ant-modal-title {
+    @apply text-red-600 dark:text-red-400 font-bold;
+  }
+
+  .ant-modal-body {
+    @apply bg-white dark:bg-gray-900;
+  }
+
+  .ant-modal-footer {
+    @apply bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700;
+  }
+}
+
+/* Tab Styles Enhancement */
+:host ::ng-deep .ant-tabs {
+  .ant-tabs-tab {
+    @apply transition-all duration-300;
+
+    &:hover {
+      @apply scale-105;
+    }
+  }
+
+  .ant-tabs-tab-active {
+    .ant-tabs-tab-btn {
+      @apply font-bold;
+    }
+  }
+
+  .ant-tabs-ink-bar {
+    @apply bg-gradient-to-r from-green-500 to-emerald-600 h-1 rounded-full;
+  }
+}
+
+/* Form Input Enhancements */
+:host ::ng-deep {
+  .ant-input,
+  .ant-input-password,
+  textarea.ant-input {
+    @apply transition-all duration-300;
+
+    &:focus {
+      @apply ring-2 ring-green-500/30 dark:ring-green-500/50;
+    }
+  }
+
+  .ant-input-affix-wrapper {
+    @apply rounded-lg transition-all duration-300;
+
+    &:focus-within {
+      @apply ring-2 ring-green-500/30 dark:ring-green-500/50 border-green-500;
+    }
+  }
+
+  /* Button Enhancements */
+  .ant-btn-primary {
+    @apply bg-gradient-to-r from-green-500 to-emerald-600 border-none;
+
+    &:hover {
+      @apply from-green-600 to-emerald-700 shadow-lg shadow-green-500/50;
+    }
+  }
+
+  .ant-btn-dangerous {
+    &:hover {
+      @apply shadow-lg shadow-red-500/50;
+    }
+  }
+
+  /* Avatar Hover Effect */
+  .ant-avatar {
+    @apply transition-all duration-300;
+  }
+}
+
+/* Stat Card Pulse Animation */
+@keyframes stat-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Tag Animations */
+:host ::ng-deep .ant-tag {
+  @apply transition-all duration-300;
+
+  &:hover {
+    @apply scale-110;
+  }
+}
+
+/* Progress Bar Gradient */
+.progress-gradient {
+  background: linear-gradient(90deg, #10b981 0%, #34d399 50%, #10b981 100%);
+  background-size: 200% 100%;
+  animation: gradient-shift 3s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Scrollbar Styling */
+:host ::ng-deep {
+  .ant-tabs-content {
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      @apply bg-green-500 dark:bg-green-600 rounded-full;
+
+      &:hover {
+        @apply bg-green-600 dark:bg-green-500;
+      }
+    }
+  }
+}
+
+/* Mobile Responsive Enhancements */
+@media (max-width: 768px) {
+  .animate-float,
+  .animate-float-slow,
+  .animate-float-slower {
+    animation: none; /* Disable animations on mobile for performance */
+  }
+}
+
+/* Dark Mode Transitions */
+* {
+  @apply transition-colors duration-300;
+}
+
+/* Loading Skeleton Effect */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f3f4f6 0px, #e5e7eb 40px, #f3f4f6 80px);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite;
+}
+
+html.dark .skeleton {
+  background: linear-gradient(90deg, #1f2937 0px, #374151 40px, #1f2937 80px);
+}
+
+/* Card Hover Effect */
+.stat-card {
+  @apply transition-all duration-300;
+
+  &:hover {
+    animation: stat-pulse 2s ease-in-out infinite;
+  }
+}
+
+/* Success Animation */
+@keyframes success-scale {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.success-animation {
+  animation: success-scale 0.5s ease-out forwards;
+}
+
+/* Icon Spin on Hover */
+.icon-spin-hover {
+  @apply transition-transform duration-300;
+
+  &:hover {
+    transform: rotate(360deg);
+  }
+}
+
+/* Border Gradient Animation */
+@keyframes border-gradient {
+  0%,
+  100% {
+    border-color: rgba(34, 197, 94, 0.3);
+  }
+  50% {
+    border-color: rgba(16, 185, 129, 0.6);
+  }
+}
+
+.border-animate {
+  animation: border-gradient 3s ease-in-out infinite;
+}

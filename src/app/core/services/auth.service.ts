@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject, throwError } from 'rxjs';
+import { Observable, BehaviorSubject, throwError, from } from 'rxjs';
 import { tap, catchError, map } from 'rxjs/operators';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import {
@@ -10,6 +10,7 @@ import {
   AuthResponse,
   User,
 } from '../models/auth.models';
+import { FirebaseAuthService } from './firebase-auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private message = inject(NzMessageService);
+  private firebaseAuth = inject(FirebaseAuthService);
 
   // API URL - Change this to your backend URL
   private readonly API_URL = 'http://localhost:1000/api/auth';
@@ -114,29 +116,43 @@ export class AuthService {
       );
   }
 
+  // Handle Google Authentication
+  handleGoogleAuth(response: AuthResponse): void {
+    // Store token
+    this.setToken(response.token);
+
+    // Store user info with profile picture
+    const user: User = {
+      id: response.id,
+      username: response.username,
+      email: response.email,
+      role: response.role,
+      profilePicture: response.profilePicture, // Google profile picture URL
+    };
+
+    localStorage.setItem('currentUser', JSON.stringify(user));
+
+    // Update state
+    this.currentUserSubject.next(user);
+    this.currentUser.set(user);
+    this.isAuthenticated.set(true);
+
+    // Show success message
+    this.message.success(`Welcome back, ${user.username}!`);
+  }
+
   // Logout user
   public logout(): Observable<any> {
-    const token = this.getToken();
-
-    // If no token, just clear local data
-    if (!token) {
-      this.clearAuthData();
-      return new Observable((observer) => {
-        observer.next(null);
-        observer.complete();
-      });
-    }
-
-    // Call backend logout (optional)
-    return this.http.post(`${this.API_URL}/logout`, {}).pipe(
+    // Sign out from Firebase if user was authenticated with Google
+    return from(this.firebaseAuth.signOut()).pipe(
       tap(() => {
         this.clearAuthData();
         this.message.success('Logged out successfully');
       }),
-      catchError((error) => {
-        // Even if backend fails, clear local data
+      catchError(() => {
+        // Even if Firebase logout fails, clear local data
         this.clearAuthData();
-        return throwError(() => error);
+        return throwError(() => new Error('Logout failed'));
       })
     );
   }

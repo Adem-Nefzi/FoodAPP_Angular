@@ -1,0 +1,824 @@
+<!-- 🎨 BENTO GRID RECIPE DETAILS -->
+<div
+  class="recipe-details-container"
+  *ngIf="!isLoading() && recipe(); else loading"
+>
+  <!-- Background Effects -->
+  <div class="background-effects">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="grid-pattern"></div>
+  </div>
+
+  <!-- Header with Back Button -->
+  <div class="header-bar">
+    <button
+      nz-button
+      nzType="text"
+      nzSize="large"
+      (click)="goBack()"
+      class="back-btn"
+    >
+      <span nz-icon nzType="arrow-left"></span>
+      <span>Back</span>
+    </button>
+
+    <button
+      nz-button
+      nzType="text"
+      nzSize="large"
+      (click)="toggleFavorite()"
+      class="favorite-btn"
+      [class.favorited]="isFavorite()"
+      [nzLoading]="isFavoriteLoading()"
+      [disabled]="isFavoriteLoading()"
+    >
+      <span
+        nz-icon
+        [nzType]="isFavorite() ? 'heart' : 'heart'"
+        [nzTheme]="isFavorite() ? 'fill' : 'outline'"
+      ></span>
+    </button>
+  </div>
+
+  <!-- BENTO GRID LAYOUT -->
+  <div class="bento-grid">
+    <!-- Title Card (Large) -->
+    <div class="bento-card title-card">
+      <div class="card-content">
+        <nz-tag nzColor="green" class="category-badge">
+          <span nz-icon nzType="tag"></span>
+          <span class="capitalize">{{
+            recipe()!.category.replace("-", " ")
+          }}</span>
+        </nz-tag>
+        <h1 class="recipe-title">{{ recipe()!.title }}</h1>
+        <p class="recipe-description">{{ recipe()!.description }}</p>
+
+        <!-- Quick Stats -->
+        <div class="stats-row">
+          <div class="stat-item">
+            <span nz-icon nzType="fire" nzTheme="fill" class="stat-icon"></span>
+            <span class="stat-value capitalize">{{
+              recipe()!.difficulty
+            }}</span>
+          </div>
+          <div class="stat-item">
+            <span
+              nz-icon
+              nzType="star"
+              nzTheme="fill"
+              class="stat-icon star"
+            ></span>
+            <span class="stat-value">{{
+              recipe()!.averageRating > 0
+                ? recipe()!.averageRating.toFixed(1)
+                : "N/A"
+            }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image Card (Medium) -->
+    <div class="bento-card image-card">
+      <img
+        [src]="recipe()!.imageUrl || '/api/placeholder/600/400'"
+        [alt]="recipe()!.title"
+        class="recipe-image"
+        onerror="this.src='/api/placeholder/600/400'"
+      />
+      <div class="image-overlay"></div>
+    </div>
+
+    <!-- Time Info Cards -->
+    <div class="bento-card time-card prep-card">
+      <span nz-icon nzType="clock-circle" class="card-icon"></span>
+      <div class="card-info">
+        <div class="card-label">Prep Time</div>
+        <div class="card-value">{{ recipe()!.prepTime }}m</div>
+      </div>
+    </div>
+
+    <div class="bento-card time-card cook-card">
+      <span nz-icon nzType="fire" class="card-icon"></span>
+      <div class="card-info">
+        <div class="card-label">Cook Time</div>
+        <div class="card-value">{{ recipe()!.cookTime }}m</div>
+      </div>
+    </div>
+
+    <div class="bento-card time-card total-card">
+      <span nz-icon nzType="dashboard" class="card-icon"></span>
+      <div class="card-info">
+        <div class="card-label">Total</div>
+        <div class="card-value">{{ getTotalTime() }}m</div>
+      </div>
+    </div>
+
+    <!-- Ingredients Card (Large) -->
+    <div class="bento-card ingredients-card">
+      <div class="card-header">
+        <div class="header-left">
+          <span nz-icon nzType="shopping-cart" class="header-icon"></span>
+          <h3>Ingredients</h3>
+        </div>
+        <span class="count-badge"
+          >{{ recipe()!.ingredients.length }} items</span
+        >
+      </div>
+      <div class="card-content scrollable">
+        <div class="ingredients-list">
+          <div
+            *ngFor="let ingredient of recipe()!.ingredients; let i = index"
+            class="ingredient-item"
+          >
+            <div class="ingredient-check">
+              <input
+                type="checkbox"
+                [id]="'ing-' + i"
+                class="checkbox-custom"
+              />
+              <label [for]="'ing-' + i" class="checkbox-label">
+                <span nz-icon nzType="check" class="check-mark"></span>
+              </label>
+            </div>
+            <span class="ingredient-text">{{ ingredient }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructions Card (X-Large) -->
+    <div class="bento-card instructions-card">
+      <div class="card-header">
+        <div class="header-left">
+          <span nz-icon nzType="ordered-list" class="header-icon"></span>
+          <h3>Instructions</h3>
+        </div>
+        <span class="count-badge">{{ recipe()!.steps.length }} steps</span>
+      </div>
+      <div class="card-content scrollable">
+        <div class="instructions-timeline">
+          <div
+            *ngFor="let step of recipe()!.steps; let i = index"
+            class="instruction-step"
+          >
+            <div class="step-marker">
+              <div class="step-number">{{ i + 1 }}</div>
+              <div
+                class="step-line"
+                *ngIf="i < recipe()!.steps.length - 1"
+              ></div>
+            </div>
+            <div class="step-content-wrapper">
+              <div class="step-content">{{ step }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recipe Statistics Card (Visual Enhancement) -->
+    <div class="bento-card stats-showcase-card">
+      <div class="card-header">
+        <div class="header-left">
+          <span nz-icon nzType="bar-chart" class="header-icon"></span>
+          <h3>Recipe Stats</h3>
+        </div>
+      </div>
+      <div class="card-content">
+        <div class="stats-grid">
+          <!-- Animated Stat Item 1 -->
+          <div class="stat-showcase-item stat-primary">
+            <div class="stat-icon-wrapper">
+              <span
+                nz-icon
+                nzType="heart"
+                nzTheme="fill"
+                class="stat-icon-large"
+              ></span>
+              <div class="pulse-ring"></div>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value-large realtime-counter">
+                {{ animatedFavorites() }}
+              </div>
+              <div class="stat-label">Total Favorites</div>
+              <div class="stat-change" *ngIf="isFavoriteLoading()">
+                <span class="updating-badge">Updating...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Animated Stat Item 2 -->
+          <div class="stat-showcase-item stat-success">
+            <div class="stat-icon-wrapper">
+              <span
+                nz-icon
+                nzType="star"
+                nzTheme="fill"
+                class="stat-icon-large"
+              ></span>
+              <div class="pulse-ring"></div>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value-large realtime-counter">
+                {{ animatedRatings() }}
+              </div>
+              <div class="stat-label">Total Ratings</div>
+              <div class="stat-sublabel">
+                Avg:
+                {{
+                  recipe()!.averageRating > 0
+                    ? recipe()!.averageRating.toFixed(1)
+                    : "N/A"
+                }}⭐
+              </div>
+              <div class="stat-change" *ngIf="loadingRating()">
+                <span class="updating-badge">Updating...</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Animated Stat Item 3 -->
+          <div class="stat-showcase-item stat-warning">
+            <div class="stat-icon-wrapper">
+              <span
+                nz-icon
+                nzType="message"
+                nzTheme="fill"
+                class="stat-icon-large"
+              ></span>
+              <div class="pulse-ring"></div>
+            </div>
+            <div class="stat-info">
+              <div class="stat-value-large realtime-counter">
+                {{ animatedComments() }}
+              </div>
+              <div class="stat-label">Comments</div>
+              <div class="stat-sublabel">Including replies</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rating Distribution Bar -->
+        <div class="rating-distribution">
+          <div class="distribution-title">Rating Distribution</div>
+          <div class="rating-bars">
+            <div class="rating-bar-row" *ngFor="let star of [5, 4, 3, 2, 1]">
+              <span class="star-label">{{ star }}⭐</span>
+              <div class="progress-bar">
+                <div
+                  class="progress-fill"
+                  [style.width.%]="getStarPercentage(star)"
+                  [class.fill-5]="star === 5"
+                  [class.fill-4]="star === 4"
+                  [class.fill-3]="star === 3"
+                  [class.fill-2]="star === 2"
+                  [class.fill-1]="star === 1"
+                ></div>
+              </div>
+              <span class="count-label">({{ getStarCount(star) }})</span>
+              <span class="percentage-label"
+                >{{ getStarPercentage(star) }}%</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Rating & Comment Card (Combined) -->
+    <div class="bento-card rating-comment-card">
+      <div class="card-header">
+        <div class="header-left">
+          <span
+            nz-icon
+            nzType="star"
+            nzTheme="fill"
+            class="header-icon star"
+          ></span>
+          <h3>Rate & Review</h3>
+        </div>
+      </div>
+      <div class="card-content">
+        <!-- Rating Section (Compact) -->
+        <div class="rating-section-compact">
+          <div class="rating-row">
+            <label class="form-label">Your Rating:</label>
+            <nz-rate
+              [(ngModel)]="userRating"
+              (ngModelChange)="onRatingChange($event)"
+              [nzCount]="5"
+              [nzDisabled]="loadingRating()"
+              class="rating-input-inline"
+            ></nz-rate>
+            <span class="rating-text" *ngIf="userRating() > 0">
+              {{ userRating() }} star{{ userRating() > 1 ? "s" : "" }}
+            </span>
+          </div>
+        </div>
+
+        <nz-divider></nz-divider>
+
+        <!-- Comment Form -->
+        <form [formGroup]="commentForm" class="comment-form">
+          <div class="comment-section">
+            <label class="form-label">Your Comment:</label>
+            <div class="textarea-wrapper">
+              <textarea
+                nz-input
+                formControlName="comment"
+                placeholder="Share your thoughts about this recipe... 😊"
+                [nzAutosize]="{ minRows: 4, maxRows: 6 }"
+                class="comment-textarea"
+              ></textarea>
+
+              <!-- Emoji Picker Button -->
+              <button
+                type="button"
+                nz-button
+                nzType="text"
+                class="emoji-btn"
+                (click)="toggleEmojiPicker()"
+              >
+                😊
+              </button>
+
+              <!-- Emoji Picker -->
+              <div
+                *ngIf="activeEmojiPicker() === 'comment'"
+                class="emoji-picker-wrapper"
+              >
+                <emoji-mart
+                  (emojiSelect)="addEmoji($event)"
+                  [showPreview]="false"
+                  [emojiSize]="24"
+                  [perLine]="8"
+                  [darkMode]="themeService.isDarkMode()"
+                ></emoji-mart>
+              </div>
+            </div>
+          </div>
+
+          <button
+            nz-button
+            [nzLoading]="submittingComment()"
+            [disabled]="commentForm.invalid"
+            (click)="onSubmitComment()"
+            class="submit-btn-new"
+          >
+            <span class="btn-content">
+              <span nz-icon nzType="send" class="btn-icon"></span>
+              <span class="btn-text">Post Comment</span>
+            </span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- All Comments Card (X-Large) -->
+    <div class="bento-card reviews-card">
+      <div class="card-header">
+        <span nz-icon nzType="message" class="header-icon"></span>
+        <h3>All Comments</h3>
+        <span class="count-badge">{{ getTotalCommentCount() }}</span>
+      </div>
+      <div class="card-content scrollable">
+        <!-- Loading State -->
+        <div *ngIf="loadingComments()" class="comments-loading">
+          <nz-spin nzSimple></nz-spin>
+          <p>Loading comments...</p>
+        </div>
+
+        <!-- Empty State -->
+        <div
+          *ngIf="!loadingComments() && comments().length === 0"
+          class="no-reviews"
+        >
+          <span nz-icon nzType="inbox" class="empty-icon"></span>
+          <p>No comments yet. Be the first to share your thoughts!</p>
+        </div>
+
+        <!-- Comments List -->
+        <div *ngIf="!loadingComments() && comments().length > 0">
+          <div *ngFor="let comment of comments()" class="review-item">
+            <div class="review-header">
+              <nz-avatar
+                [nzText]="getUserInitials(comment.userId)"
+                nzSize="default"
+              ></nz-avatar>
+              <div class="review-meta">
+                <div class="author-name">
+                  User {{ comment.userId.substring(0, 8) }}
+                </div>
+                <div class="review-date">
+                  {{ formatDate(comment.createdAt) }}
+                </div>
+              </div>
+            </div>
+            <!-- Comment Text (Edit Mode) -->
+            <div *ngIf="editingComment() === comment.id" class="reply-form">
+              <div class="reply-input-wrapper">
+                <textarea
+                  nz-input
+                  [(ngModel)]="editText"
+                  placeholder="Edit your comment... 😊"
+                  [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                  class="reply-textarea"
+                ></textarea>
+
+                <!-- Edit Emoji Picker Button -->
+                <button
+                  type="button"
+                  nz-button
+                  nzType="text"
+                  class="emoji-btn"
+                  (click)="toggleEditEmojiPicker(comment.id)"
+                >
+                  😊
+                </button>
+
+                <!-- Edit Emoji Picker -->
+                <div
+                  *ngIf="
+                    activeEmojiPicker() === 'edit' &&
+                    activePickerId() === comment.id
+                  "
+                  class="emoji-picker-wrapper"
+                >
+                  <emoji-mart
+                    (emojiSelect)="addEditEmoji($event)"
+                    [showPreview]="false"
+                    [emojiSize]="24"
+                    [perLine]="8"
+                    [darkMode]="themeService.isDarkMode()"
+                  ></emoji-mart>
+                </div>
+              </div>
+
+              <div class="reply-actions">
+                <button
+                  nz-button
+                  nzType="default"
+                  nzSize="small"
+                  (click)="cancelEdit()"
+                >
+                  Cancel
+                </button>
+                <button
+                  nz-button
+                  nzType="primary"
+                  nzSize="small"
+                  [nzLoading]="submittingEdit()"
+                  [disabled]="!editText().trim()"
+                  (click)="submitEdit(comment.id)"
+                >
+                  <span nz-icon nzType="check"></span>
+                  Save
+                </button>
+              </div>
+            </div>
+
+            <!-- Comment Text (View Mode) -->
+            <p *ngIf="editingComment() !== comment.id" class="review-content">
+              {{ comment.text }}
+            </p>
+
+            <!-- Action Buttons -->
+            <div
+              *ngIf="editingComment() !== comment.id"
+              class="comment-actions"
+            >
+              <button
+                nz-button
+                nzType="text"
+                nzSize="small"
+                class="reply-btn"
+                (click)="startReply(comment)"
+              >
+                <span nz-icon nzType="message"></span>
+                Reply
+              </button>
+
+              <!-- Edit Button (only if owner) -->
+              <button
+                *ngIf="isCommentOwner(comment)"
+                nz-button
+                nzType="text"
+                nzSize="small"
+                class="reply-btn"
+                (click)="startEdit(comment)"
+              >
+                <span nz-icon nzType="edit"></span>
+                Edit
+              </button>
+
+              <!-- Delete Button (only if owner) -->
+              <button
+                *ngIf="isCommentOwner(comment)"
+                nz-button
+                nzType="text"
+                nzSize="small"
+                class="reply-btn delete-btn"
+                (click)="
+                  deleteComment(
+                    comment.id,
+                    comment.replies && comment.replies.length > 0
+                  )
+                "
+              >
+                <span nz-icon nzType="delete"></span>
+                Delete
+              </button>
+            </div>
+
+            <!-- Reply Form -->
+            <div *ngIf="replyingTo()?.id === comment.id" class="reply-form">
+              <div class="reply-input-wrapper">
+                <textarea
+                  nz-input
+                  [(ngModel)]="replyText"
+                  placeholder="Write your reply... 😊"
+                  [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                  class="reply-textarea"
+                ></textarea>
+
+                <!-- Reply Emoji Picker Button -->
+                <button
+                  type="button"
+                  nz-button
+                  nzType="text"
+                  class="emoji-btn"
+                  (click)="toggleReplyEmojiPicker(comment.id)"
+                >
+                  😊
+                </button>
+
+                <!-- Reply Emoji Picker -->
+                <div
+                  *ngIf="
+                    activeEmojiPicker() === 'reply' &&
+                    activePickerId() === comment.id
+                  "
+                  class="emoji-picker-wrapper"
+                >
+                  <emoji-mart
+                    (emojiSelect)="addReplyEmoji($event)"
+                    [showPreview]="false"
+                    [emojiSize]="24"
+                    [perLine]="8"
+                    [darkMode]="themeService.isDarkMode()"
+                  ></emoji-mart>
+                </div>
+              </div>
+
+              <div class="reply-actions">
+                <button
+                  nz-button
+                  nzType="default"
+                  nzSize="small"
+                  (click)="cancelReply()"
+                >
+                  Cancel
+                </button>
+                <button
+                  nz-button
+                  nzType="primary"
+                  nzSize="small"
+                  [nzLoading]="submittingReply()"
+                  [disabled]="!replyText().trim()"
+                  (click)="submitReply()"
+                >
+                  <span nz-icon nzType="send"></span>
+                  Reply
+                </button>
+              </div>
+            </div>
+
+            <!-- Nested Replies (Recursive up to depth 3) -->
+            <ng-container
+              *ngIf="comment.replies && comment.replies.length > 0"
+              [ngTemplateOutlet]="replyTemplate"
+              [ngTemplateOutletContext]="{
+                $implicit: comment.replies,
+                depth: 1
+              }"
+            ></ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recursive Reply Template (Supports up to depth 3) -->
+<ng-template #replyTemplate let-replies let-depth="depth">
+  <div class="replies-section">
+    <div *ngFor="let reply of replies" class="reply-item">
+      <div class="review-header">
+        <nz-avatar
+          [nzText]="getUserInitials(reply.userId)"
+          nzSize="small"
+        ></nz-avatar>
+        <div class="review-meta">
+          <div class="author-name">User {{ reply.userId.substring(0, 8) }}</div>
+          <div class="review-date">
+            {{ formatDate(reply.createdAt) }}
+          </div>
+        </div>
+      </div>
+      <!-- Reply Text (Edit Mode) -->
+      <div *ngIf="editingComment() === reply.id" class="reply-form">
+        <div class="reply-input-wrapper">
+          <textarea
+            nz-input
+            [(ngModel)]="editText"
+            placeholder="Edit your reply... 😊"
+            [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+            class="reply-textarea"
+          ></textarea>
+
+          <!-- Edit Emoji Picker Button -->
+          <button
+            type="button"
+            nz-button
+            nzType="text"
+            class="emoji-btn"
+            (click)="toggleEditEmojiPicker(reply.id)"
+          >
+            😊
+          </button>
+
+          <!-- Edit Emoji Picker -->
+          <div
+            *ngIf="
+              activeEmojiPicker() === 'edit' && activePickerId() === reply.id
+            "
+            class="emoji-picker-wrapper"
+          >
+            <emoji-mart
+              (emojiSelect)="addEditEmoji($event)"
+              [showPreview]="false"
+              [emojiSize]="24"
+              [perLine]="8"
+              [darkMode]="themeService.isDarkMode()"
+            ></emoji-mart>
+          </div>
+        </div>
+
+        <div class="reply-actions">
+          <button
+            nz-button
+            nzType="default"
+            nzSize="small"
+            (click)="cancelEdit()"
+          >
+            Cancel
+          </button>
+          <button
+            nz-button
+            nzType="primary"
+            nzSize="small"
+            [nzLoading]="submittingEdit()"
+            [disabled]="!editText().trim()"
+            (click)="submitEdit(reply.id)"
+          >
+            <span nz-icon nzType="check"></span>
+            Save
+          </button>
+        </div>
+      </div>
+
+      <!-- Reply Text (View Mode) -->
+      <p *ngIf="editingComment() !== reply.id" class="review-content">
+        {{ reply.text }}
+      </p>
+
+      <!-- Action Buttons -->
+      <div *ngIf="editingComment() !== reply.id" class="comment-actions">
+        <!-- Reply Button (only if depth < 3) -->
+        <button
+          *ngIf="depth < 3"
+          nz-button
+          nzType="text"
+          nzSize="small"
+          class="reply-btn"
+          (click)="startReply(reply)"
+        >
+          <span nz-icon nzType="message"></span>
+          Reply
+        </button>
+
+        <!-- Edit Button (only if owner) -->
+        <button
+          *ngIf="isCommentOwner(reply)"
+          nz-button
+          nzType="text"
+          nzSize="small"
+          class="reply-btn"
+          (click)="startEdit(reply)"
+        >
+          <span nz-icon nzType="edit"></span>
+          Edit
+        </button>
+
+        <!-- Delete Button (only if owner) -->
+        <button
+          *ngIf="isCommentOwner(reply)"
+          nz-button
+          nzType="text"
+          nzSize="small"
+          class="reply-btn delete-btn"
+          (click)="
+            deleteComment(reply.id, reply.replies && reply.replies.length > 0)
+          "
+        >
+          <span nz-icon nzType="delete"></span>
+          Delete
+        </button>
+      </div>
+
+      <!-- Reply Form -->
+      <div *ngIf="replyingTo()?.id === reply.id" class="reply-form">
+        <div class="reply-input-wrapper">
+          <textarea
+            nz-input
+            [(ngModel)]="replyText"
+            placeholder="Write your reply... 😊"
+            [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+            class="reply-textarea"
+          ></textarea>
+
+          <!-- Reply Emoji Picker Button -->
+          <button
+            type="button"
+            nz-button
+            nzType="text"
+            class="emoji-btn"
+            (click)="toggleReplyEmojiPicker(reply.id)"
+          >
+            😊
+          </button>
+
+          <!-- Reply Emoji Picker -->
+          <div
+            *ngIf="
+              activeEmojiPicker() === 'reply' && activePickerId() === reply.id
+            "
+            class="emoji-picker-wrapper"
+          >
+            <emoji-mart
+              (emojiSelect)="addReplyEmoji($event)"
+              [showPreview]="false"
+              [emojiSize]="24"
+              [perLine]="8"
+              [darkMode]="themeService.isDarkMode()"
+            ></emoji-mart>
+          </div>
+        </div>
+
+        <div class="reply-actions">
+          <button
+            nz-button
+            nzType="default"
+            nzSize="small"
+            (click)="cancelReply()"
+          >
+            Cancel
+          </button>
+          <button
+            nz-button
+            nzType="primary"
+            nzSize="small"
+            [nzLoading]="submittingReply()"
+            [disabled]="!replyText().trim()"
+            (click)="submitReply()"
+          >
+            <span nz-icon nzType="send"></span>
+            Reply
+          </button>
+        </div>
+      </div>
+
+      <!-- Nested replies (recursive call if depth < 3) -->
+      <ng-container
+        *ngIf="reply.replies && reply.replies.length > 0 && depth < 3"
+        [ngTemplateOutlet]="replyTemplate"
+        [ngTemplateOutletContext]="{
+          $implicit: reply.replies,
+          depth: depth + 1
+        }"
+      ></ng-container>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Loading State -->
+<ng-template #loading>
+  <div class="loading-container">
+    <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
+    <p class="loading-text">Loading recipe details...</p>
+  </div>
+</ng-template>

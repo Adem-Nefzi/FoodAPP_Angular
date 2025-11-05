@@ -1,44 +1,165 @@
-<!-- AI CHAT COMPONENT -->
-<div class="max-w-4xl mx-auto space-y-6">
-  <div class="text-center space-y-4 py-12">
-    <span nz-icon nzType="robot" class="text-6xl text-blue-500 block"></span>
-    <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
-      AI Chef Assistant
-    </h2>
-    <p class="text-gray-600 dark:text-gray-400">
-      Get personalized cooking recommendations and tips
-    </p>
+<!-- 🤖 AI CHEF ASSISTANT - PREMIUM DESIGN -->
+<div class="ai-chat-container">
+  <!-- Background Effects -->
+  <div class="background-effects">
+    <div class="gradient-orb orb-1"></div>
+    <div class="gradient-orb orb-2"></div>
+    <div class="gradient-orb orb-3"></div>
   </div>
 
-  <!-- Chat Messages -->
-  <div class="space-y-4 h-96 overflow-y-auto">
-    <div class="flex gap-3">
-      <div
-        class="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0"
-      >
-        <span nz-icon nzType="robot" class="text-white text-sm"></span>
+  <!-- Main Chat Card -->
+  <div class="chat-card">
+    <!-- Hero Header -->
+    <div class="hero-header">
+      <!-- Animated AI Avatar -->
+      <div class="ai-avatar-container">
+        <div class="avatar-glow"></div>
+        <div class="ai-avatar">
+          <span nz-icon nzType="robot" class="avatar-icon"></span>
+          <div class="pulse-ring"></div>
+          <div class="pulse-ring pulse-ring-2"></div>
+        </div>
       </div>
-      <div class="bg-blue-100 dark:bg-blue-900/30 rounded-lg p-4 max-w-xs">
-        <p class="text-sm text-gray-900 dark:text-white">
-          Hello! I'm your AI Chef. How can I help you cook today?
+
+      <!-- Title Section -->
+      <div class="header-content">
+        <div class="status-badge">
+          <span class="status-dot"></span>
+          <span>AI Online</span>
+        </div>
+        <h2 class="title">AI Chef Assistant</h2>
+        <p class="subtitle">
+          Your personal cooking companion powered by artificial intelligence
         </p>
       </div>
-    </div>
-  </div>
 
-  <!-- Input Area -->
-  <div class="flex gap-2">
-    <input
-      type="text"
-      placeholder="Ask me anything about cooking..."
-      class="flex-1 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:border-blue-500"
-    />
-    <button
-      nz-button
-      nzType="primary"
-      class="rounded-lg border-0 bg-blue-500 hover:bg-blue-600"
-    >
-      <span nz-icon nzType="send"></span>
-    </button>
+      <!-- Quick Actions -->
+      <div class="quick-actions">
+        <button nz-button class="action-btn">
+          <span nz-icon nzType="bulb" nzTheme="fill"></span>
+          <span>Get Ideas</span>
+        </button>
+        <button nz-button class="action-btn">
+          <span nz-icon nzType="fire" nzTheme="fill"></span>
+          <span>Trending</span>
+        </button>
+        <button nz-button class="action-btn">
+          <span nz-icon nzType="heart" nzTheme="fill"></span>
+          <span>Favorites</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Suggested Prompts -->
+    <div class="suggested-prompts">
+      <div class="prompt-label">
+        <span nz-icon nzType="thunderbolt" nzTheme="fill"></span>
+        Quick Start
+      </div>
+      <div class="prompts-grid">
+        <button class="prompt-card">
+          <span nz-icon nzType="coffee" class="prompt-icon"></span>
+          <span class="prompt-text">What can I make for breakfast?</span>
+        </button>
+        <button class="prompt-card">
+          <span nz-icon nzType="fire" class="prompt-icon"></span>
+          <span class="prompt-text">Quick dinner ideas</span>
+        </button>
+        <button class="prompt-card">
+          <span nz-icon nzType="heart" class="prompt-icon"></span>
+          <span class="prompt-text">Healthy meal suggestions</span>
+        </button>
+        <button class="prompt-card">
+          <span nz-icon nzType="star" class="prompt-icon"></span>
+          <span class="prompt-text">Surprise me with a recipe</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Chat Messages Area -->
+    <div class="messages-container">
+      <!-- Welcome Message -->
+      <div class="message-wrapper ai-message">
+        <div class="message-avatar">
+          <span nz-icon nzType="robot" class="avatar-icon-small"></span>
+        </div>
+        <div class="message-content">
+          <div class="message-header">
+            <span class="message-sender">AI Chef</span>
+            <span class="message-time">Just now</span>
+          </div>
+          <div class="message-bubble ai-bubble">
+            <div class="typing-indicator" style="display: none">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <p>
+              👋 Hello! I'm your AI Chef Assistant. I'm here to help you
+              discover amazing recipes, answer cooking questions, and provide
+              personalized recommendations. What would you like to cook today?
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Example User Message (Hidden by default) -->
+      <!-- <div class="message-wrapper user-message">
+        <div class="message-content">
+          <div class="message-header reverse">
+            <span class="message-time">2 min ago</span>
+            <span class="message-sender">You</span>
+          </div>
+          <div class="message-bubble user-bubble">
+            <p>I want to make pasta carbonara</p>
+          </div>
+        </div>
+        <div class="message-avatar user-avatar">
+          <span nz-icon nzType="user"></span>
+        </div>
+      </div> -->
+    </div>
+
+    <!-- Input Area -->
+    <div class="input-container">
+      <!-- Enhanced Input Box -->
+      <div class="input-wrapper">
+        <button nz-button nzType="text" class="input-action-btn">
+          <span nz-icon nzType="plus-circle" nzTheme="fill"></span>
+        </button>
+
+        <input
+          type="text"
+          placeholder="Ask me anything about cooking, recipes, or ingredients..."
+          class="chat-input"
+        />
+
+        <button nz-button nzType="text" class="input-action-btn">
+          <span nz-icon nzType="picture" nzTheme="fill"></span>
+        </button>
+      </div>
+
+      <!-- Send Button -->
+      <button nz-button nzType="primary" class="send-btn">
+        <span nz-icon nzType="send" class="send-icon"></span>
+        <span class="send-text">Send</span>
+      </button>
+    </div>
+
+    <!-- Features Footer -->
+    <div class="features-footer">
+      <div class="feature-item">
+        <span nz-icon nzType="safety" nzTheme="fill"></span>
+        <span>Safe & Secure</span>
+      </div>
+      <div class="feature-item">
+        <span nz-icon nzType="thunderbolt" nzTheme="fill"></span>
+        <span>Instant Responses</span>
+      </div>
+      <div class="feature-item">
+        <span nz-icon nzType="star" nzTheme="fill"></span>
+        <span>Personalized</span>
+      </div>
+    </div>
   </div>
 </div>

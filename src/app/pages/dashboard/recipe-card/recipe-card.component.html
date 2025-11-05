@@ -1,13 +1,16 @@
 <!-- MODERN RECIPE CARD - COMPACT & ELEGANT -->
 <div
-  class="group cursor-pointer h-full rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all hover:shadow-lg hover:border-green-300 dark:hover:border-green-700"
+  class="group cursor-pointer h-full rounded-lg overflow-hidden border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 transition-all hover:shadow-lg hover:border-green-300 dark:hover:border-green-700 flex flex-col"
 >
   <!-- Image Container -->
-  <div class="relative overflow-hidden h-40 bg-gray-200 dark:bg-gray-800">
+  <div
+    class="relative overflow-hidden h-40 bg-gray-200 dark:bg-gray-800 flex-shrink-0"
+  >
     <img
-      [src]="recipe.image"
+      [src]="recipe.imageUrl || '/api/placeholder/300/200'"
       [alt]="recipe.title"
       class="w-full h-full object-cover transition-transform group-hover:scale-110"
+      onerror="this.src='/api/placeholder/300/200'"
     />
 
     <!-- Overlay -->
@@ -18,7 +21,7 @@
     <!-- Difficulty Badge -->
     <div class="absolute top-2 right-2">
       <span
-        class="px-2 py-1 rounded text-xs font-bold bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-white"
+        class="px-2 py-1 rounded text-xs font-bold bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-white capitalize"
       >
         {{ recipe.difficulty }}
       </span>
@@ -29,58 +32,66 @@
       class="absolute bottom-2 left-2 flex items-center gap-1 px-2 py-1 rounded text-xs font-medium bg-white/90 dark:bg-gray-900/90 text-gray-900 dark:text-white"
     >
       <span nz-icon nzType="clock-circle" class="text-sm"></span>
-      {{ recipe.cookTime }}m
+      {{ recipe.cookTime + recipe.prepTime }}m
     </div>
   </div>
 
   <!-- Content -->
-  <div class="p-4 space-y-3">
+  <div class="p-4 flex flex-col flex-1">
     <!-- Title -->
     <h3
-      class="font-bold text-sm line-clamp-2 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors"
+      class="font-bold text-sm line-clamp-2 text-gray-900 dark:text-white group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors mb-3"
     >
       {{ recipe.title }}
     </h3>
 
     <!-- Description -->
-    <p class="text-xs text-gray-600 dark:text-gray-400 line-clamp-2">
+    <p class="text-xs text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">
       {{ recipe.description }}
     </p>
 
     <!-- Meta Info -->
     <div
-      class="grid grid-cols-3 gap-2 py-2 border-t border-b border-gray-200 dark:border-gray-800"
+      class="grid grid-cols-3 gap-2 py-2 border-t border-b border-gray-200 dark:border-gray-800 mb-3"
     >
       <div class="text-center">
         <div class="text-xs font-bold text-gray-900 dark:text-white">
-          {{ recipe.servings }}
+          {{ recipe.prepTime }}m
         </div>
-        <div class="text-xs text-gray-500 dark:text-gray-400">Servings</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400">Prep</div>
       </div>
       <div class="text-center">
         <div class="text-xs font-bold text-gray-900 dark:text-white">
-          {{ recipe.calories }}
+          {{ recipe.ingredients.length }}
         </div>
-        <div class="text-xs text-gray-500 dark:text-gray-400">Cal</div>
+        <div class="text-xs text-gray-500 dark:text-gray-400">Items</div>
       </div>
       <div class="text-center">
-        <div class="text-xs font-bold text-yellow-500">{{ recipe.rating }}</div>
+        <div class="text-xs font-bold text-yellow-500">
+          {{
+            recipe.averageRating > 0 ? recipe.averageRating.toFixed(1) : "N/A"
+          }}
+        </div>
         <div class="text-xs text-gray-500 dark:text-gray-400">Rating</div>
       </div>
     </div>
 
-    <!-- Tags -->
-    <div class="flex gap-1 flex-wrap">
+    <!-- Category -->
+    <div class="flex gap-1 flex-wrap mb-3">
       <span
-        *ngFor="let tag of recipe.tags.slice(0, 2)"
-        class="px-2 py-1 rounded text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400"
+        class="px-2 py-1 rounded text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 capitalize"
       >
-        {{ tag }}
+        {{ recipe.category.replace("-", " ") }}
+      </span>
+      <span
+        class="px-2 py-1 rounded text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 capitalize"
+      >
+        {{ recipe.steps.length }} steps
       </span>
     </div>
 
-    <!-- Actions -->
-    <div class="flex gap-2 pt-2">
+    <!-- Actions - Pushed to bottom -->
+    <div class="flex gap-2 mt-auto pt-2">
       <button
         nz-button
         nzType="primary"
@@ -93,14 +104,18 @@
       <button
         nz-button
         nzSize="small"
-        class="rounded border border-gray-300 dark:border-gray-700 text-xs font-medium"
-        (click)="toggleFavorite()"
+        [nzLoading]="isFavoriteLoading()"
+        [disabled]="isFavoriteLoading()"
+        class="rounded border border-gray-300 dark:border-gray-700 text-xs font-medium hover:scale-110 transition-transform"
+        (click)="toggleFavorite($event)"
       >
         <span
           nz-icon
-          [nzType]="isFavorited() ? 'heart' : 'heart'"
+          [nzType]="'heart'"
           [nzTheme]="isFavorited() ? 'fill' : 'outline'"
           [class.text-red-500]="isFavorited()"
+          [class.text-gray-500]="!isFavorited()"
+          class="transition-colors"
         ></span>
       </button>
     </div>

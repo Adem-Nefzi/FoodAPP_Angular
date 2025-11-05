@@ -11,6 +11,10 @@ export interface RegisterRequest {
   profilePicture?: string;
 }
 
+export interface FirebaseLoginRequest {
+  idToken: string;
+}
+
 // Response models
 export interface AuthResponse {
   token: string;

@@ -51,9 +51,13 @@ export class SidebarComponent implements OnInit {
   // ✅ FIXED: Computed values for user info
   userDisplayName = computed(() => this.currentUser()?.username || 'User');
   userRoleBadge = computed(() => (this.isAdmin() ? 'Admin' : 'Member'));
-  userProfilePicture = computed(
-    () => this.currentUser()?.profilePicture || this.getDefaultAvatar()
-  );
+  userProfilePicture = computed(() => {
+    const user = this.currentUser();
+    const picture = user?.profilePicture;
+
+    // Return the profile picture URL or undefined (nz-avatar will use icon)
+    return picture || undefined;
+  });
 
   // ✅ FIXED: Computed menu items
   mainMenuItems = computed(() => {
@@ -79,13 +83,6 @@ export class SidebarComponent implements OnInit {
     return items;
   });
 
-  collectionsMenuItems = [
-    { label: 'Breakfast', icon: 'coffee', route: '/breakfast' },
-    { label: 'Lunch', icon: 'apple', route: '/lunch' },
-    { label: 'Dinner', icon: 'shopping', route: '/dinner' },
-    { label: 'Desserts', icon: 'gift', route: '/desserts' },
-  ];
-
   settingsMenuItems = [
     { label: 'Settings', icon: 'setting', route: '/settings' },
     { label: 'Help', icon: 'question-circle', route: '/help' },
@@ -107,11 +104,18 @@ export class SidebarComponent implements OnInit {
 
   logout() {
     this.modal.confirm({
-      nzTitle: 'Logout Confirmation',
-      nzContent: 'Are you sure you want to logout?',
-      nzOkText: 'Yes, Logout',
+      nzTitle: 'Sign Out',
+      nzContent:
+        "Are you sure you want to leave? You'll need to sign in again to access your recipes.",
+      nzOkText: 'Yes, Sign Out',
       nzOkDanger: true,
-      nzCancelText: 'Cancel',
+      nzCancelText: 'Stay Here',
+      nzClassName: 'custom-logout-modal',
+      nzMaskClosable: true,
+      nzClosable: false,
+      nzCentered: true,
+      nzWidth: 400,
+      nzIconType: 'exclamation-circle',
       nzOnOk: () => {
         return new Promise((resolve) => {
           this.authService.logout().subscribe({

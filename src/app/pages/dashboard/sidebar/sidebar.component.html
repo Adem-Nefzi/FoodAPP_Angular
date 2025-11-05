@@ -1,6 +1,6 @@
 <!-- ICONIC MODERN SIDEBAR - 2025 DESIGN -->
 <div
-  class="h-full flex flex-col bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-950 border-r border-gray-200 dark:border-gray-800 w-64 relative overflow-hidden"
+  class="h-full flex flex-col bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-950 border-r border-gray-200 dark:border-gray-800 w-60 relative overflow-hidden"
 >
   <!-- Added animated background elements for modern aesthetic -->
   <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -37,8 +37,6 @@
         </div>
       </div>
     </div>
-
-
   </div>
 
   <!-- Navigation -->
@@ -75,27 +73,6 @@
         </a>
       </ng-container>
     </div>
-
-    <!-- Collections -->
-    <div class="space-y-2 px-4">
-      <div
-        class="text-xs font-bold uppercase tracking-widest text-gray-500 dark:text-gray-400 px-3 mb-4"
-      >
-        Collections
-      </div>
-      <a
-        *ngFor="let item of collectionsMenuItems"
-        [routerLink]="item.route"
-        class="flex items-center gap-3 px-4 py-2.5 rounded-lg transition-all text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800/50 group"
-      >
-        <span
-          nz-icon
-          [nzType]="item.icon"
-          class="text-base transition-transform duration-300 group-hover:scale-110"
-        ></span>
-        <span class="font-medium">{{ item.label }}</span>
-      </a>
-    </div>
   </div>
 
   <!-- Bottom Section - Enhanced with Theme Toggle -->
@@ -130,7 +107,6 @@
       </div>
     </button>
 
-    <!-- User Profile -->
     <!-- User Profile - Connected to Backend -->
     <div
       (click)="goToProfile()"
@@ -139,7 +115,7 @@
       <nz-avatar
         [nzSize]="40"
         [nzSrc]="userProfilePicture()"
-        [nzIcon]="currentUser()?.profilePicture ? undefined : 'user'"
+        [nzIcon]="!userProfilePicture() ? 'user' : undefined"
         class="flex-shrink-0 ring-2 ring-green-500/30 group-hover:ring-green-500/50 transition-all"
       ></nz-avatar>
       <div class="flex-1 min-w-0">
@@ -154,7 +130,7 @@
       </div>
       <!-- Optional: Add indicator if admin -->
       <span
-        *ngIf="isAdmin"
+        *ngIf="isAdmin()"
         nz-icon
         nzType="crown"
         nzTheme="fill"

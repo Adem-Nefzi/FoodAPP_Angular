@@ -4,6 +4,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap");
 
 /* =========================
+   ✅ Emoji Mart Styles
+   ========================= */
+@import "@ctrl/ngx-emoji-mart/picker";
+
+/* =========================
    ✅ Tailwind layers
    ========================= */
 @tailwind base;
@@ -197,4 +202,147 @@ html {
 .light-theme .ant-card {
   background-color: #ffffff !important;
   border-color: #e5e1d8 !important;
+}
+
+/* Dark Modal Styles - Matching Light Mode Structure */
+
+/* Modal Content */
+.dark-modal .ant-modal-content {
+  background-color: #1e293b !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Modal Header */
+.dark-modal .ant-modal-header {
+  background-color: #1e293b !important;
+  border-bottom: 1px solid #334155 !important;
+  border-radius: 8px 8px 0 0 !important;
+}
+
+.dark-modal .ant-modal-title {
+  color: #f1f5f9 !important;
+}
+
+/* Modal Body */
+.dark-modal .ant-modal-body {
+  background-color: #1e293b !important;
+  color: #e2e8f0 !important;
+}
+
+/* Modal Footer */
+.dark-modal .ant-modal-footer {
+  background-color: #1e293b !important;
+  border-top: 1px solid #334155 !important;
+  border-radius: 0 0 8px 8px !important;
+}
+
+/* Close Button */
+.dark-modal .ant-modal-close {
+  color: #94a3b8 !important;
+}
+
+.dark-modal .ant-modal-close:hover {
+  color: #f1f5f9 !important;
+}
+
+/* Buttons - AGGRESSIVE OVERRIDE */
+.dark-modal .ant-btn,
+.dark-modal button {
+  color: #1f2937 !important;
+}
+
+.dark-modal .ant-btn-default,
+.dark-modal
+  .ant-modal-footer
+  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous) {
+  background-color: #f3f4f6 !important;
+  border-color: #d1d5db !important;
+  color: #1f2937 !important;
+}
+
+.dark-modal .ant-btn-default:hover,
+.dark-modal
+  .ant-modal-footer
+  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):hover {
+  background-color: #e5e7eb !important;
+  border-color: #9ca3af !important;
+  color: #111827 !important;
+}
+
+/* Ensure button text is always visible - DARK TEXT FOR LIGHT BUTTONS */
+.dark-modal .ant-btn span,
+.dark-modal button span {
+  color: inherit !important;
+}
+
+.dark-modal .ant-btn-default span,
+.dark-modal
+  .ant-modal-footer
+  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous)
+  span {
+  color: #1f2937 !important;
+}
+
+.dark-modal .ant-btn-primary span {
+  color: #ffffff !important;
+}
+
+.dark-modal .ant-btn-dangerous span {
+  color: #ffffff !important;
+}
+
+.dark-modal .ant-btn-primary {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+  color: #ffffff !important;
+}
+
+.dark-modal .ant-btn-primary:hover {
+  background-color: #2563eb !important;
+  border-color: #2563eb !important;
+}
+
+.dark-modal .ant-btn-dangerous {
+  background-color: #ef4444 !important;
+  border-color: #ef4444 !important;
+}
+
+.dark-modal .ant-btn-dangerous:hover {
+  background-color: #dc2626 !important;
+  border-color: #dc2626 !important;
+}
+
+/* Confirm Modal Specific */
+.dark-modal .ant-modal-confirm-body-wrapper {
+  color: #e2e8f0 !important;
+}
+
+.dark-modal .ant-modal-confirm-body .ant-modal-confirm-title {
+  color: #f1f5f9 !important;
+}
+
+.dark-modal .ant-modal-confirm-body .ant-modal-confirm-content {
+  color: #cbd5e1 !important;
+}
+
+/* Icons */
+.dark-modal .anticon {
+  color: inherit !important;
+}
+
+.dark-modal .ant-modal-confirm-warning .ant-modal-confirm-body > .anticon {
+  color: #fbbf24 !important;
+}
+
+.dark-modal .ant-modal-confirm-error .ant-modal-confirm-body > .anticon {
+  color: #ef4444 !important;
+}
+
+.dark-modal .ant-modal-confirm-success .ant-modal-confirm-body > .anticon {
+  color: #10b981 !important;
+}
+
+.dark-modal .ant-modal-confirm-info .ant-modal-confirm-body > .anticon {
+  color: #3b82f6 !important;
 }

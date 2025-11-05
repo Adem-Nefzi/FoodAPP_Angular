@@ -1,0 +1,159 @@
+/* Theme transition utility */
+.theme-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Modal entrance animation */
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Custom Logout Modal Styling - Theme Aware */
+:host ::ng-deep .custom-logout-modal {
+  .ant-modal-content {
+    border-radius: 1rem;
+    overflow: hidden;
+    animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(20px);
+    background: white !important;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Dark mode modal background */
+  html.dark & .ant-modal-content {
+    background: #1f2937 !important;
+    border: 1px solid #374151;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Modal mask with blur */
+  + .ant-modal-mask {
+    backdrop-filter: blur(4px);
+    background-color: rgba(0, 0, 0, 0.45) !important;
+  }
+
+  html.dark & + .ant-modal-mask {
+    background-color: rgba(0, 0, 0, 0.65) !important;
+  }
+
+  /* Modal body */
+  .ant-modal-body {
+    padding: 1.5rem;
+  }
+
+  /* Icon styling */
+  .ant-modal-confirm-body > .anticon {
+    color: #ef4444 !important;
+    font-size: 1.5rem !important;
+    margin-top: 0.25rem;
+  }
+
+  html.dark & .ant-modal-confirm-body > .anticon {
+    color: #f87171 !important;
+  }
+
+  /* Modal footer */
+  .ant-modal-footer {
+    border: none;
+    padding: 0 1.5rem 1.5rem;
+    background: transparent;
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+  }
+
+  /* Buttons styling */
+  .ant-btn {
+    height: auto;
+    padding: 0.625rem 1.25rem;
+    border-radius: 0.625rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: none;
+  }
+
+  /* Cancel button */
+  .ant-btn-default {
+    background: #f3f4f6;
+    color: #374151;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+
+  .ant-btn-default:hover {
+    background: #e5e7eb;
+    color: #1f2937;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  html.dark & .ant-btn-default {
+    background: #374151;
+    color: #d1d5db;
+  }
+
+  html.dark & .ant-btn-default:hover {
+    background: #4b5563;
+    color: #f3f4f6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  /* Danger button (logout) */
+  .ant-btn-dangerous {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+  }
+
+  .ant-btn-dangerous:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+  }
+
+  html.dark & .ant-btn-dangerous {
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 100%);
+    box-shadow: 0 2px 8px rgba(248, 113, 113, 0.4);
+  }
+
+  html.dark & .ant-btn-dangerous:hover {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    box-shadow: 0 6px 20px rgba(248, 113, 113, 0.5);
+  }
+
+  /* Button active states */
+  .ant-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Title styling */
+  .ant-modal-confirm-title {
+    font-weight: 600 !important;
+    color: #111827 !important;
+    font-size: 1.125rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  html.dark & .ant-modal-confirm-title {
+    color: #f9fafb !important;
+  }
+
+  /* Content styling */
+  .ant-modal-confirm-content {
+    color: #6b7280 !important;
+    line-height: 1.6 !important;
+    font-size: 0.875rem !important;
+  }
+
+  html.dark & .ant-modal-confirm-content {
+    color: #9ca3af !important;
+  }
+}

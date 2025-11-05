@@ -1,0 +1,262 @@
+<!-- Clean, dashboard-aligned Settings layout inspired by the provided design -->
+<div class="settings-shell">
+  <!-- 🎨 ANIMATED BACKGROUND -->
+  <div class="settings-background">
+    <!-- Animated Gradient Base -->
+    <div class="gradient-base"></div>
+
+    <!-- Floating Orbs -->
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+
+    <!-- Grid Pattern -->
+    <div class="grid-pattern"></div>
+
+    <!-- Floating Icons -->
+    <div class="floating-icons">
+      <span class="float-icon icon-1">⚙️</span>
+      <span class="float-icon icon-2">🔒</span>
+      <span class="float-icon icon-3">👤</span>
+      <span class="float-icon icon-4">🎨</span>
+      <span class="float-icon icon-5">✨</span>
+      <span class="float-icon icon-6">🛡️</span>
+    </div>
+  </div>
+
+  <div class="settings-header">
+    <button nz-button nzType="default" nzGhost (click)="goBack()">
+      <span nz-icon nzType="arrow-left"></span>
+      Back to dashboard
+    </button>
+    <div class="title">
+      <span nz-icon nzType="setting" class="mr-2"></span>
+      Account Settings
+    </div>
+  </div>
+
+  <div class="settings-content">
+    <!-- Left navigation -->
+    <nz-card class="nav-card">
+      <ul class="nav-list">
+        <li
+          class="nav-item"
+          [class.active]="activeSection() === 'account'"
+          (click)="activeSection.set('account')"
+        >
+          <span nz-icon nzType="user"></span>
+          <span>Account</span>
+        </li>
+        <li
+          class="nav-item danger"
+          [class.active]="activeSection() === 'danger'"
+          (click)="activeSection.set('danger')"
+        >
+          <span nz-icon nzType="warning"></span>
+          <span>Danger Zone</span>
+        </li>
+      </ul>
+    </nz-card>
+
+    <!-- Right content -->
+    <div class="section-stack">
+      <!-- Account section -->
+      <ng-container *ngIf="activeSection() === 'account'">
+        <nz-card class="stack-card">
+          <div class="stack-card-header">
+            <h3>My Profile</h3>
+            <span class="muted">Manage your personal information</span>
+          </div>
+
+          <div class="profile-row">
+            <div class="avatar-block">
+              <nz-avatar
+                [nzSize]="72"
+                [nzSrc]="
+                  profileForm.value.profilePicture ||
+                  userProfile()?.profilePicture
+                "
+                nzIcon="user"
+              ></nz-avatar>
+              <div class="avatar-actions">
+                <nz-upload
+                  [nzBeforeUpload]="beforeUpload"
+                  [nzShowUploadList]="false"
+                >
+                  <button nz-button nzSize="small">
+                    <span nz-icon nzType="cloud-upload"></span>
+                    Change image
+                  </button>
+                </nz-upload>
+                <button
+                  nz-button
+                  nzSize="small"
+                  nzDanger
+                  (click)="removeAvatar()"
+                >
+                  Remove image
+                </button>
+              </div>
+              <small class="muted"
+                >We support JPG, PNG, GIF, and WebP under 2MB</small
+              >
+            </div>
+
+            <form
+              [formGroup]="profileForm"
+              (ngSubmit)="onSubmitProfile()"
+              class="profile-form"
+            >
+              <div class="grid-2">
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="24">Display name</nz-form-label>
+                  <nz-form-control [nzSpan]="24">
+                    <input
+                      nz-input
+                      formControlName="username"
+                      placeholder="Enter a display name"
+                    />
+                  </nz-form-control>
+                </nz-form-item>
+
+                <nz-form-item>
+                  <nz-form-label [nzSpan]="24">Email</nz-form-label>
+                  <nz-form-control [nzSpan]="24">
+                    <input nz-input formControlName="email" readonly />
+                  </nz-form-control>
+                </nz-form-item>
+              </div>
+
+              <div class="actions">
+                <button
+                  nz-button
+                  nzType="primary"
+                  [disabled]="!profileForm.valid || isLoading()"
+                  [nzLoading]="isLoading()"
+                >
+                  Save changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </nz-card>
+
+        <nz-card class="stack-card">
+          <div class="stack-card-header">
+            <h3>Account Security</h3>
+            <span class="muted">Change your password</span>
+          </div>
+
+          <form
+            [formGroup]="passwordForm"
+            (ngSubmit)="onSubmitPassword()"
+            class="security-form"
+          >
+            <div class="grid-3">
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">Current password</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    nz-input
+                    type="password"
+                    formControlName="currentPassword"
+                    placeholder="Enter current password"
+                  />
+                  <div
+                    class="error"
+                    *ngIf="
+                      passwordForm.get('currentPassword')?.touched &&
+                      passwordForm.get('currentPassword')?.invalid
+                    "
+                  >
+                    Current password is required
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">New password</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    nz-input
+                    type="password"
+                    formControlName="newPassword"
+                    placeholder="At least 6 characters"
+                  />
+                  <div
+                    class="error"
+                    *ngIf="
+                      passwordForm.get('newPassword')?.touched &&
+                      passwordForm.get('newPassword')?.invalid
+                    "
+                  >
+                    <ng-container
+                      *ngIf="passwordForm.get('newPassword')?.errors?.['required']"
+                      >New password is required</ng-container
+                    >
+                    <ng-container
+                      *ngIf="passwordForm.get('newPassword')?.errors?.['minlength']"
+                      >Must be at least 6 characters</ng-container
+                    >
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+
+              <nz-form-item>
+                <nz-form-label [nzSpan]="24">Confirm password</nz-form-label>
+                <nz-form-control [nzSpan]="24">
+                  <input
+                    nz-input
+                    type="password"
+                    formControlName="confirmPassword"
+                    placeholder="Re-enter new password"
+                  />
+                  <div
+                    class="error"
+                    *ngIf="passwordForm.errors?.['passwordMismatch'] && passwordForm.get('confirmPassword')?.touched"
+                  >
+                    Passwords do not match
+                  </div>
+                </nz-form-control>
+              </nz-form-item>
+            </div>
+
+            <div class="actions">
+              <button
+                nz-button
+                nzType="primary"
+                [disabled]="passwordForm.invalid || isLoading()"
+                [nzLoading]="isLoading()"
+              >
+                Update password
+              </button>
+            </div>
+          </form>
+        </nz-card>
+      </ng-container>
+
+      <!-- Danger section -->
+      <ng-container *ngIf="activeSection() === 'danger'">
+        <nz-card class="stack-card danger">
+          <div class="stack-card-header">
+            <h3>Danger Zone</h3>
+            <span class="muted"
+              >Permanently remove your account from this device</span
+            >
+          </div>
+
+          <div class="danger-body">
+            <div class="warning">
+              <span nz-icon nzType="warning"></span>
+              Deleting your account will remove all local data. This cannot be
+              undone.
+            </div>
+            <button nz-button nzDanger (click)="showDeleteAccountModal()">
+              Delete account
+            </button>
+          </div>
+        </nz-card>
+      </ng-container>
+    </div>
+  </div>
+</div>

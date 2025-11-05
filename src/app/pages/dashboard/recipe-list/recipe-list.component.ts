@@ -1,24 +1,14 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
-
-interface Recipe {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  cookTime: number;
-  difficulty: string;
-  rating: number;
-  calories: number;
-  servings: number;
-  tags: string[];
-  category: string;
-}
+import { RecipeService } from '../../../core/services/recipe.service';
+import { Recipe } from '../../../core/models/recipe.models';
 
 @Component({
   selector: 'app-recipes-list',
@@ -29,137 +19,77 @@ interface Recipe {
     NzButtonModule,
     NzIconModule,
     NzPaginationModule,
+    NzSpinModule,
     RecipeCardComponent,
   ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.css',
 })
-export class RecipesListComponent {
+export class RecipesListComponent implements OnInit {
+  private recipeService = inject(RecipeService);
+  private message = inject(NzMessageService);
+
+  // UI State
   searchQuery = signal('');
   selectedCategory = signal('All Recipes');
   currentPage = signal(1);
   pageSize = signal(12);
   sortBy = signal('popular');
   isDarkMode = signal(false);
+  isLoading = signal(false);
 
+  // Data
+  recipes = signal<Recipe[]>([]);
+
+  // Categories mapping (backend categories to display names)
   categories = [
     'All Recipes',
-    'Breakfast',
-    'Lunch',
-    'Dinner',
+    'Main Course',
     'Dessert',
-    'Snacks',
+    'Appetizer',
+    'Soup',
+    'Salad',
   ];
 
-  recipes: Recipe[] = [
-    {
-      id: 1,
-      title: 'Classic Chicken Pasta',
-      description: 'Creamy pasta with tender chicken pieces',
-      image: '/api/placeholder/300/200',
-      cookTime: 25,
-      difficulty: 'Easy',
-      rating: 4.8,
-      calories: 450,
-      servings: 4,
-      tags: ['Pasta', 'Chicken', 'Italian'],
-      category: 'Lunch',
-    },
-    {
-      id: 2,
-      title: 'Grilled Salmon',
-      description: 'Fresh salmon with lemon and herbs',
-      image: '/api/placeholder/300/200',
-      cookTime: 20,
-      difficulty: 'Medium',
-      rating: 4.9,
-      calories: 380,
-      servings: 2,
-      tags: ['Fish', 'Healthy', 'Grilled'],
-      category: 'Dinner',
-    },
-    {
-      id: 3,
-      title: 'Chocolate Cake',
-      description: 'Rich and moist chocolate cake',
-      image: '/api/placeholder/300/200',
-      cookTime: 45,
-      difficulty: 'Medium',
-      rating: 4.7,
-      calories: 320,
-      servings: 8,
-      tags: ['Dessert', 'Chocolate', 'Baking'],
-      category: 'Dessert',
-    },
-    {
-      id: 4,
-      title: 'Vegetable Stir Fry',
-      description: 'Colorful mix of fresh vegetables',
-      image: '/api/placeholder/300/200',
-      cookTime: 15,
-      difficulty: 'Easy',
-      rating: 4.6,
-      calories: 220,
-      servings: 3,
-      tags: ['Vegetarian', 'Healthy', 'Quick'],
-      category: 'Lunch',
-    },
-    {
-      id: 5,
-      title: 'Pancakes',
-      description: 'Fluffy pancakes with maple syrup',
-      image: '/api/placeholder/300/200',
-      cookTime: 20,
-      difficulty: 'Easy',
-      rating: 4.8,
-      calories: 280,
-      servings: 4,
-      tags: ['Breakfast', 'Sweet', 'Easy'],
-      category: 'Breakfast',
-    },
-    {
-      id: 6,
-      title: 'Caesar Salad',
-      description: 'Fresh romaine with parmesan',
-      image: '/api/placeholder/300/200',
-      cookTime: 10,
-      difficulty: 'Easy',
-      rating: 4.5,
-      calories: 180,
-      servings: 2,
-      tags: ['Salad', 'Healthy', 'Quick'],
-      category: 'Lunch',
-    },
-    {
-      id: 7,
-      title: 'Beef Tacos',
-      description: 'Seasoned beef with fresh toppings',
-      image: '/api/placeholder/300/200',
-      cookTime: 20,
-      difficulty: 'Easy',
-      rating: 4.7,
-      calories: 350,
-      servings: 4,
-      tags: ['Mexican', 'Beef', 'Quick'],
-      category: 'Dinner',
-    },
-    {
-      id: 8,
-      title: 'Brownies',
-      description: 'Fudgy chocolate brownies',
-      image: '/api/placeholder/300/200',
-      cookTime: 35,
-      difficulty: 'Easy',
-      rating: 4.9,
-      calories: 280,
-      servings: 12,
-      tags: ['Dessert', 'Chocolate', 'Baking'],
-      category: 'Dessert',
-    },
-  ];
+  // Category mapping for backend
+  private categoryMap: Record<string, string> = {
+    'All Recipes': '',
+    'Main Course': 'main-course',
+    Dessert: 'dessert',
+    Appetizer: 'appetizer',
+    Soup: 'soup',
+    Salad: 'salad',
+  };
+
+  ngOnInit() {
+    this.loadRecipes();
+  }
+
+  /**
+   * Load recipes from backend
+   */
+  loadRecipes() {
+    this.isLoading.set(true);
+
+    // Fetch all recipes (approval system not implemented yet)
+    this.recipeService.getAllRecipes().subscribe({
+      next: (recipes) => {
+        console.log('Loaded recipes:', recipes);
+        this.recipes.set(recipes);
+        this.isLoading.set(false);
+      },
+      error: (error) => {
+        console.error('Error loading recipes:', error);
+        this.message.error(
+          'Failed to load recipes. Please check if the backend is running.'
+        );
+        this.isLoading.set(false);
+      },
+    });
+  }
 
   filteredRecipes = computed(() => {
-    let filtered = this.recipes;
+    let filtered = this.recipes();
 
     // Filter by search
     if (this.searchQuery()) {
@@ -173,22 +103,33 @@ export class RecipesListComponent {
 
     // Filter by category
     if (this.selectedCategory() !== 'All Recipes') {
-      filtered = filtered.filter((r) => r.category === this.selectedCategory());
+      const backendCategory = this.categoryMap[this.selectedCategory()];
+      filtered = filtered.filter((r) => r.category === backendCategory);
     }
 
     // Sort
     switch (this.sortBy()) {
       case 'rating':
-        filtered = [...filtered].sort((a, b) => b.rating - a.rating);
+        filtered = [...filtered].sort(
+          (a, b) => b.averageRating - a.averageRating
+        );
         break;
       case 'time':
-        filtered = [...filtered].sort((a, b) => a.cookTime - b.cookTime);
+        filtered = [...filtered].sort(
+          (a, b) => a.prepTime + a.cookTime - (b.prepTime + b.cookTime)
+        );
         break;
       case 'recent':
-        // Assuming newer recipes have higher IDs
-        filtered = [...filtered].sort((a, b) => b.id - a.id);
+        filtered = [...filtered].sort(
+          (a, b) =>
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        );
         break;
-      // 'popular' is the default order
+      // 'popular' is the default order (by rating)
+      default:
+        filtered = [...filtered].sort(
+          (a, b) => b.averageRating - a.averageRating
+        );
     }
 
     return filtered;

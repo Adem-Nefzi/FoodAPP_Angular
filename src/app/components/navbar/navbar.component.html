@@ -190,15 +190,13 @@
             <!-- User Avatar -->
             <nz-avatar
               [nzSize]="32"
-              [nzSrc]="currentUser?.profilePicture || undefined"
-              [nzIcon]="currentUser?.profilePicture ? undefined : 'user'"
+              [nzSrc]="currentUser?.profilePicture"
+              [nzIcon]="!currentUser?.profilePicture ? 'user' : undefined"
               class="border-2"
-              [style.background]="
-                'linear-gradient(135deg, ' +
-                themeService.colors().primary +
-                ', ' +
-                themeService.colors().accent +
-                ')'
+              [ngClass]="
+                !currentUser?.profilePicture
+                  ? 'bg-gradient-to-br from-green-500 to-emerald-600'
+                  : ''
               "
             ></nz-avatar>
 
@@ -247,8 +245,8 @@
                 <div class="relative">
                   <nz-avatar
                     [nzSize]="48"
-                    [nzSrc]="currentUser?.profilePicture || undefined"
-                    [nzIcon]="currentUser?.profilePicture ? undefined : 'user'"
+                    [nzSrc]="currentUser?.profilePicture"
+                    [nzIcon]="!currentUser?.profilePicture ? 'user' : undefined"
                     class="border-2 shadow-lg"
                     [ngClass]="
                       isDarkMode
@@ -293,7 +291,7 @@
                           : 'bg-amber-500/15 text-amber-700'
                       "
                     >
-                      {{ currentUser?.role || "User" }}
+                      {{ isAdmin() ? "Admin" : "Member" }}
                     </div>
                     <div
                       class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"
