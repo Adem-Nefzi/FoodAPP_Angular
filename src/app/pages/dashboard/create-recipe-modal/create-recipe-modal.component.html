@@ -1,0 +1,300 @@
+<!-- CREATE RECIPE MODAL - COMPACT & PROFESSIONAL -->
+<nz-modal
+  [(nzVisible)]="isVisible"
+  [nzTitle]="modalTitle"
+  [nzFooter]="modalFooter"
+  [nzWidth]="680"
+  [nzClosable]="!isSubmitting()"
+  [nzMaskClosable]="!isSubmitting()"
+  [nzClassName]="'create-recipe-modal'"
+  (nzOnCancel)="handleCancel()"
+>
+  <ng-template #modalTitle>
+    <div class="modal-header">
+      <span nz-icon nzType="plus-circle" class="header-icon"></span>
+      <span class="header-text">Create New Recipe</span>
+    </div>
+  </ng-template>
+
+  <ng-container *nzModalContent>
+    <div class="modal-shell">
+      <!-- Progress Steps -->
+      <div class="steps-wrapper">
+        <div class="steps-indicator">
+          <div
+            *ngFor="let step of [0, 1, 2]; let i = index"
+            class="step-item"
+            [class.active]="currentStep() === i"
+            [class.completed]="currentStep() > i"
+          >
+            <div class="step-number">
+              <span *ngIf="currentStep() > i" nz-icon nzType="check"></span>
+              <span *ngIf="currentStep() <= i">{{ i + 1 }}</span>
+            </div>
+            <span class="step-label">{{
+              i === 0 ? "Details" : i === 1 ? "Ingredients" : "Instructions"
+            }}</span>
+          </div>
+        </div>
+      </div>
+
+      <form [formGroup]="recipeForm">
+        <!-- Step 1: Basic Info -->
+        <div *ngIf="currentStep() === 0" class="step-content">
+          <!-- Image Upload -->
+          <div class="form-section">
+            <div *ngIf="!imageUrl()" class="upload-area">
+              <nz-upload
+                [nzBeforeUpload]="handleImageUpload"
+                [nzShowUploadList]="false"
+                [(nzFileList)]="fileList"
+              >
+                <div class="upload-placeholder">
+                  <span nz-icon nzType="picture" class="upload-icon"></span>
+                  <div class="upload-text">Click or drag image to upload</div>
+                  <div class="upload-hint">JPG, PNG • Max 5MB</div>
+                </div>
+              </nz-upload>
+            </div>
+
+            <div *ngIf="imageUrl()" class="image-preview">
+              <img [src]="imageUrl()!" alt="Recipe" />
+              <button
+                nz-button
+                nzType="text"
+                nzDanger
+                class="remove-image"
+                (click)="
+                  imageUrl.set(null); recipeForm.patchValue({ imageUrl: '' })
+                "
+              >
+                <span nz-icon nzType="delete"></span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Title & Description -->
+          <nz-form-item>
+            <nz-form-label nzRequired>Recipe Title</nz-form-label>
+            <nz-form-control
+              nzErrorTip="Please enter a title (min 3 characters)"
+            >
+              <input
+                nz-input
+                formControlName="title"
+                placeholder="e.g., Classic Chocolate Cake"
+              />
+            </nz-form-control>
+          </nz-form-item>
+
+          <nz-form-item>
+            <nz-form-label nzRequired>Description</nz-form-label>
+            <nz-form-control
+              nzErrorTip="Please enter a description (min 10 characters)"
+            >
+              <textarea
+                nz-input
+                formControlName="description"
+                [nzAutosize]="{ minRows: 3, maxRows: 4 }"
+                placeholder="Describe your recipe..."
+              ></textarea>
+            </nz-form-control>
+          </nz-form-item>
+
+          <!-- Category & Difficulty -->
+          <div class="form-row">
+            <nz-form-item>
+              <nz-form-label nzRequired>Category</nz-form-label>
+              <nz-form-control nzErrorTip="Please select a category">
+                <nz-select formControlName="category" nzPlaceHolder="Select">
+                  <nz-option
+                    *ngFor="let cat of categories"
+                    [nzValue]="cat.value"
+                    [nzLabel]="cat.label"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label nzRequired>Difficulty</nz-form-label>
+              <nz-form-control nzErrorTip="Please select difficulty">
+                <nz-select formControlName="difficulty" nzPlaceHolder="Select">
+                  <nz-option
+                    *ngFor="let diff of difficulties"
+                    [nzValue]="diff.value"
+                    [nzLabel]="diff.label"
+                  ></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+
+          <!-- Times -->
+          <div class="form-row">
+            <nz-form-item>
+              <nz-form-label nzRequired>Prep Time (min)</nz-form-label>
+              <nz-form-control nzErrorTip="Required">
+                <nz-input-number
+                  formControlName="prepTime"
+                  [nzMin]="1"
+                  [nzMax]="999"
+                  class="full-width"
+                ></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+
+            <nz-form-item>
+              <nz-form-label nzRequired>Cook Time (min)</nz-form-label>
+              <nz-form-control nzErrorTip="Required">
+                <nz-input-number
+                  formControlName="cookTime"
+                  [nzMin]="1"
+                  [nzMax]="999"
+                  class="full-width"
+                ></nz-input-number>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+
+        <!-- Step 2: Ingredients -->
+        <div *ngIf="currentStep() === 1" class="step-content">
+          <div class="section-header">
+            <h3>Ingredients</h3>
+            <button
+              nz-button
+              nzType="dashed"
+              nzSize="small"
+              (click)="addIngredient()"
+            >
+              <span nz-icon nzType="plus"></span>
+              Add
+            </button>
+          </div>
+
+          <div formArrayName="ingredients" class="list-items">
+            <div
+              *ngFor="let ingredient of ingredients.controls; let i = index"
+              [formGroupName]="i"
+              class="list-item"
+            >
+              <span class="item-number">{{ i + 1 }}</span>
+              <nz-form-item class="item-input">
+                <nz-form-control [nzErrorTip]="'Required'">
+                  <input
+                    nz-input
+                    formControlName="item"
+                    [placeholder]="'e.g., 2 cups flour'"
+                  />
+                </nz-form-control>
+              </nz-form-item>
+              <button
+                nz-button
+                nzType="text"
+                nzDanger
+                (click)="removeIngredient(i)"
+                [disabled]="ingredients.length === 1"
+              >
+                <span nz-icon nzType="delete"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Instructions -->
+        <div *ngIf="currentStep() === 2" class="step-content">
+          <div class="section-header">
+            <h3>Cooking Instructions</h3>
+            <button
+              nz-button
+              nzType="dashed"
+              nzSize="small"
+              (click)="addStep()"
+            >
+              <span nz-icon nzType="plus"></span>
+              Add
+            </button>
+          </div>
+
+          <div formArrayName="steps" class="list-items">
+            <div
+              *ngFor="let step of steps.controls; let i = index"
+              [formGroupName]="i"
+              class="list-item step-item"
+            >
+              <span class="item-number">{{ i + 1 }}</span>
+              <nz-form-item class="item-input">
+                <nz-form-control [nzErrorTip]="'Required'">
+                  <textarea
+                    nz-input
+                    formControlName="instruction"
+                    [nzAutosize]="{ minRows: 2, maxRows: 4 }"
+                    [placeholder]="'Step ' + (i + 1) + '...'"
+                  ></textarea>
+                </nz-form-control>
+              </nz-form-item>
+              <button
+                nz-button
+                nzType="text"
+                nzDanger
+                (click)="removeStep(i)"
+                [disabled]="steps.length === 1"
+              >
+                <span nz-icon nzType="delete"></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </ng-container>
+
+  <ng-template #modalFooter>
+    <div class="modal-footer">
+      <button
+        *ngIf="currentStep() > 0"
+        nz-button
+        nzType="default"
+        (click)="prevStep()"
+        [disabled]="isSubmitting()"
+      >
+        <span nz-icon nzType="left"></span>
+        Back
+      </button>
+
+      <div class="footer-right">
+        <button
+          nz-button
+          nzType="default"
+          (click)="handleCancel()"
+          [disabled]="isSubmitting()"
+        >
+          Cancel
+        </button>
+
+        <button
+          *ngIf="currentStep() < 2"
+          nz-button
+          nzType="primary"
+          (click)="nextStep()"
+        >
+          Next
+          <span nz-icon nzType="right"></span>
+        </button>
+
+        <button
+          *ngIf="currentStep() === 2"
+          nz-button
+          nzType="primary"
+          (click)="handleSubmit()"
+          [nzLoading]="isSubmitting()"
+          [disabled]="isSubmitting()"
+        >
+          <span nz-icon nzType="check"></span>
+          Create Recipe
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</nz-modal>

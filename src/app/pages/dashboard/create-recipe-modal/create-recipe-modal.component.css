@@ -1,0 +1,729 @@
+/* =====================================================
+   Create Recipe Modal – Theme Aware Styling
+   ===================================================== */
+
+.modal-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Modal & Header - Light Mode */
+:host ::ng-deep .ant-modal-content {
+  background: #ffffff !important;
+  border-radius: 18px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden;
+  color: #111827;
+}
+
+:host ::ng-deep .ant-modal-header,
+:host ::ng-deep .ant-modal-footer {
+  background: #ffffff !important;
+  border: none !important;
+  padding: 20px 28px !important;
+}
+
+:host ::ng-deep .ant-modal-body {
+  padding: 0 28px 28px !important;
+  background: #ffffff !important;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #111827;
+}
+
+.header-icon {
+  font-size: 20px;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 8px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-text {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #111827;
+}
+
+/* Steps Indicator - Light Mode */
+.steps-wrapper {
+  padding: 12px 0 24px;
+}
+
+.steps-indicator {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  position: relative;
+  gap: 12px;
+}
+
+.steps-indicator::before {
+  content: "";
+  position: absolute;
+  top: 20px;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: #e5e7eb;
+  z-index: 0;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  z-index: 1;
+  color: #6b7280;
+  transition: color 200ms ease;
+}
+
+.step-number {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #e5e7eb;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 15px;
+  background: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: all 200ms ease;
+}
+
+.step-item.completed .step-number {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+}
+
+.step-item.active {
+  color: #111827;
+  font-weight: 600;
+}
+
+.step-item.active .step-number {
+  border-color: #22c55e;
+  color: #22c55e;
+  background: #ffffff;
+  transform: translateY(-2px);
+}
+
+.step-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.3px;
+  font-weight: 500;
+}
+
+/* Step Content */
+.step-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Upload Section - Light Mode */
+.form-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+}
+
+.upload-area {
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1.5px dashed #d1d5db;
+  padding: 28px;
+  text-align: center;
+  transition: all 200ms ease;
+}
+
+.upload-area:hover {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #6b7280;
+}
+
+.upload-icon {
+  font-size: 32px;
+  color: #22c55e;
+}
+
+.upload-text {
+  font-weight: 600;
+  color: #111827;
+}
+
+.upload-hint {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.image-preview {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 28px rgba(45, 45, 45, 0.05);
+}
+
+.image-preview img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.remove-image {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(220, 53, 69, 0.85) !important;
+  color: #ffffff !important;
+  border-radius: 8px;
+}
+
+/* Form Fields - Light Mode */
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+nz-form-item {
+  margin-bottom: 12px;
+}
+
+:host ::ng-deep .ant-form-item-label > label {
+  color: #6b6b6b;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+}
+
+:host ::ng-deep .ant-input,
+:host ::ng-deep .ant-select-selector,
+:host ::ng-deep .ant-input-number,
+:host ::ng-deep textarea.ant-input {
+  border-radius: 8px !important;
+  border: 1px solid #d1d5db !important;
+  background: #ffffff !important;
+  color: #111827 !important;
+  transition: all 200ms ease;
+}
+
+:host ::ng-deep .ant-input:hover,
+:host ::ng-deep .ant-select-selector:hover,
+:host ::ng-deep .ant-input-number:hover,
+:host ::ng-deep textarea.ant-input:hover {
+  border-color: #22c55e !important;
+}
+
+:host ::ng-deep .ant-input:focus,
+:host ::ng-deep .ant-select-focused .ant-select-selector,
+:host ::ng-deep .ant-input-number-focused,
+:host ::ng-deep textarea.ant-input:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+}
+
+:host ::ng-deep .ant-input::placeholder,
+:host ::ng-deep textarea.ant-input::placeholder {
+  color: #9ca3af !important;
+}
+
+/* =====================================================
+   SECTION HEADERS - Beautiful & Clear
+   ===================================================== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 1px solid #bbf7d0;
+}
+
+.section-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #166534;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-header h3::before {
+  content: "📝";
+  font-size: 18px;
+}
+
+.section-header button[nz-button] {
+  border-radius: 8px;
+  border: 1px solid #22c55e;
+  color: #ffffff;
+  background: #22c55e;
+  font-weight: 500;
+  font-size: 13px;
+  padding: 6px 16px;
+  height: 34px;
+  transition: all 200ms ease;
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+}
+
+.section-header button[nz-button]:hover {
+  background: #16a34a;
+  border-color: #16a34a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+}
+
+/* =====================================================
+   LIST DESIGN - Beautiful Card Style
+   ===================================================== */
+.list-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.list-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 45px 1fr 80px;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  transition: all 200ms ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.list-item::before {
+  display: none;
+}
+
+/* Beautiful hover effect */
+.list-item:hover {
+  border-color: #22c55e;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.15);
+  transform: translateY(-2px);
+}
+
+/* Number badge - Beautiful gradient circle */
+.item-number {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  box-shadow: 0 3px 8px rgba(34, 197, 94, 0.25);
+  transition: all 200ms ease;
+  flex-shrink: 0;
+}
+
+.list-item:hover .item-number {
+  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.4);
+  transform: scale(1.1);
+}
+
+.item-number::after {
+  display: none;
+}
+
+/* Input - Clean with subtle border */
+.item-input {
+  margin: 0 !important;
+  flex: 1;
+}
+
+.item-input :host ::ng-deep .ant-form-item-control-input {
+  min-height: auto;
+}
+
+.list-item :host ::ng-deep .ant-input,
+.list-item :host ::ng-deep textarea.ant-input {
+  border: 1px solid #e5e7eb !important;
+  background: #f9fafb !important;
+  padding: 10px 14px !important;
+  border-radius: 8px !important;
+  font-size: 14px;
+  transition: all 200ms ease;
+}
+
+.list-item :host ::ng-deep .ant-input:focus,
+.list-item :host ::ng-deep textarea.ant-input:focus {
+  border-color: #22c55e !important;
+  background: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+}
+
+.list-item :host ::ng-deep .ant-input::placeholder,
+.list-item :host ::ng-deep textarea.ant-input::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Delete button - ALWAYS VISIBLE & Beautiful */
+.list-item button[nzDanger] {
+  opacity: 1 !important;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid #fecaca !important;
+  background: #fef2f2 !important;
+  color: #ef4444 !important;
+  transition: all 200ms ease;
+}
+
+.list-item button[nzDanger]:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.25);
+}
+
+.list-item button[nzDanger]:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed;
+}
+
+/* Step item - Instructions with textarea */
+.list-item.step-item {
+  align-items: start;
+  grid-template-columns: 45px 1fr 80px;
+  padding: 20px;
+}
+
+.list-item.step-item .item-number {
+  margin-top: 8px;
+}
+
+.list-item.step-item textarea {
+  resize: none;
+  min-height: 80px !important;
+  line-height: 1.6;
+}
+
+/* Footer - Light Mode */
+.modal-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.footer-right {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+:host ::ng-deep .ant-btn {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 0 18px;
+  height: 38px;
+  transition: all 200ms ease;
+}
+
+:host ::ng-deep .ant-btn-default {
+  border-color: #e5e7eb;
+  color: #374151;
+  background: #f3f4f6;
+}
+
+:host ::ng-deep .ant-btn-default:hover {
+  border-color: #d1d5db;
+  color: #111827;
+  background: #e5e7eb;
+}
+
+:host ::ng-deep .ant-btn-primary {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+  box-shadow: 0 2px 4px rgba(34, 197, 94, 0.2);
+}
+
+:host ::ng-deep .ant-btn-primary:hover {
+  background: #16a34a;
+  border-color: #16a34a;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(34, 197, 94, 0.3);
+}
+
+:host ::ng-deep .ant-btn-link {
+  color: #ef4444 !important;
+}
+
+/* Dark Mode Overrides */
+:host ::ng-deep .dark-theme .ant-modal-content,
+:host ::ng-deep .dark-theme .ant-modal-header,
+:host ::ng-deep .dark-theme .ant-modal-body,
+:host ::ng-deep .dark-theme .ant-modal-footer {
+  background: #1f2937 !important;
+  color: #f3f4f6 !important;
+}
+
+:host ::ng-deep .dark-theme .modal-header,
+:host ::ng-deep .dark-theme .header-text {
+  color: #f3f4f6;
+}
+
+:host ::ng-deep .dark-theme .header-icon {
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.15);
+}
+
+:host ::ng-deep .dark-theme .steps-indicator::before {
+  background: #374151;
+}
+
+:host ::ng-deep .dark-theme .step-item {
+  color: #9ca3af;
+}
+
+:host ::ng-deep .dark-theme .step-item.active {
+  color: #f3f4f6;
+}
+
+:host ::ng-deep .dark-theme .step-number {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+:host ::ng-deep .dark-theme .step-item.completed .step-number {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+:host ::ng-deep .dark-theme .step-item.active .step-number {
+  border-color: #22c55e;
+  color: #22c55e;
+  background: #1f2937;
+}
+
+:host ::ng-deep .dark-theme .upload-area {
+  background: #111827;
+  border-color: #374151;
+}
+
+:host ::ng-deep .dark-theme .upload-area:hover {
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+:host ::ng-deep .dark-theme .upload-icon {
+  color: #22c55e;
+}
+
+:host ::ng-deep .dark-theme .upload-text {
+  color: #f3f4f6;
+}
+
+:host ::ng-deep .dark-theme .upload-hint {
+  color: #9ca3af;
+}
+
+:host ::ng-deep .dark-theme .image-preview {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+:host ::ng-deep .dark-theme .ant-form-item-label > label {
+  color: #d1d5db !important;
+}
+
+:host ::ng-deep .dark-theme .ant-input,
+:host ::ng-deep .dark-theme .ant-select-selector,
+:host ::ng-deep .dark-theme .ant-input-number,
+:host ::ng-deep .dark-theme textarea.ant-input {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #f3f4f6 !important;
+}
+
+:host ::ng-deep .dark-theme .ant-input:hover,
+:host ::ng-deep .dark-theme .ant-select-selector:hover,
+:host ::ng-deep .dark-theme .ant-input-number:hover,
+:host ::ng-deep .dark-theme textarea.ant-input:hover {
+  border-color: #22c55e !important;
+}
+
+:host ::ng-deep .dark-theme .ant-input:focus,
+:host ::ng-deep .dark-theme .ant-select-focused .ant-select-selector,
+:host ::ng-deep .dark-theme .ant-input-number-focused,
+:host ::ng-deep .dark-theme textarea.ant-input:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important;
+}
+
+/* DARK THEME - Beautiful Card Style */
+:host ::ng-deep .dark-theme .section-header {
+  background: linear-gradient(
+    135deg,
+    rgba(34, 197, 94, 0.15) 0%,
+    rgba(34, 197, 94, 0.08) 100%
+  );
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+:host ::ng-deep .dark-theme .section-header h3 {
+  color: #22c55e;
+}
+
+:host ::ng-deep .dark-theme .section-header button[nz-button] {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+}
+
+:host ::ng-deep .dark-theme .section-header button[nz-button]:hover {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+/* DARK THEME - List Items */
+:host ::ng-deep .dark-theme .list-item {
+  background: #1f2937;
+  border-color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+:host ::ng-deep .dark-theme .list-item:hover {
+  border-color: #22c55e;
+  box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+}
+
+:host ::ng-deep .dark-theme .item-number {
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  box-shadow: 0 3px 8px rgba(34, 197, 94, 0.3);
+}
+
+:host ::ng-deep .dark-theme .list-item:hover .item-number {
+  box-shadow: 0 5px 15px rgba(34, 197, 94, 0.5);
+}
+
+:host ::ng-deep .dark-theme .list-item :host ::ng-deep .ant-input,
+:host ::ng-deep .dark-theme .list-item :host ::ng-deep textarea.ant-input {
+  background: #111827 !important;
+  border-color: #374151 !important;
+  color: #f3f4f6 !important;
+}
+
+:host ::ng-deep .dark-theme .list-item :host ::ng-deep .ant-input:focus,
+:host
+  ::ng-deep
+  .dark-theme
+  .list-item
+  :host
+  ::ng-deep
+  textarea.ant-input:focus {
+  background: #1f2937 !important;
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.15) !important;
+}
+
+:host ::ng-deep .dark-theme .list-item button[nzDanger] {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: rgba(239, 68, 68, 0.3) !important;
+  color: #f87171 !important;
+}
+
+:host ::ng-deep .dark-theme .list-item button[nzDanger]:hover {
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: #ffffff !important;
+}
+
+:host ::ng-deep .dark-theme .ant-btn-default {
+  background: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+}
+
+:host ::ng-deep .dark-theme .ant-btn-default:hover {
+  background: #4b5563;
+  border-color: #6b7280;
+  color: #ffffff;
+}
+
+:host ::ng-deep .dark-theme .ant-btn-primary {
+  background: #22c55e;
+  border-color: #22c55e;
+  color: #ffffff;
+}
+
+:host ::ng-deep .dark-theme .ant-btn-primary:hover {
+  background: #16a34a;
+  border-color: #16a34a;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :host ::ng-deep .ant-modal-content {
+    border-radius: 14px !important;
+  }
+
+  .steps-indicator::before {
+    display: none;
+  }
+
+  .step-number {
+    width: 36px;
+    height: 36px;
+    font-size: 13px;
+  }
+
+  .step-label {
+    font-size: 11px;
+    letter-spacing: 1px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footer-right {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .footer-right button {
+    flex: 1;
+  }
+}

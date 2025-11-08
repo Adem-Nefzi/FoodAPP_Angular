@@ -1,5 +1,5 @@
 <!-- MODERN RECIPE LIST - CLEAN & ELEGANT -->
-<div class="space-y-8">
+<div class="space-y-6">
   <!-- Search & Filter Section -->
   <div class="space-y-4">
     <!-- Search Bar -->
@@ -54,15 +54,17 @@
         nz-button
         nzType="primary"
         nzSize="large"
+        (click)="openCreateRecipeModal()"
         class="rounded-xl font-semibold border-0 bg-green-500 hover:bg-green-600 text-white px-6 py-2 h-auto whitespace-nowrap transition-colors duration-200 flex-shrink-0 flex items-center gap-2"
       >
         <span nz-icon nzType="plus" class="text-base"></span>
         <span>New Recipe</span>
       </button>
     </div>
+  </div>
 
-    <!-- Featured Recipe Section -->
-    <div
+  <!-- Featured Recipe Section -->
+  <div
       *ngIf="featuredRecipe()"
       class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-gray-800 dark:to-gray-900 rounded-xl overflow-hidden border border-green-200 dark:border-gray-700"
     >
@@ -115,8 +117,8 @@
       </div>
     </div>
 
-    <!-- Results Info -->
-    <div
+  <!-- Results Info -->
+  <div
       class="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400"
     >
       <p>
@@ -141,16 +143,16 @@
       </select>
     </div>
 
-    <!-- Loading Spinner -->
-    <div *ngIf="isLoading()" class="py-12 text-center">
+  <!-- Loading Spinner -->
+  <div *ngIf="isLoading()" class="py-12 text-center">
       <nz-spin nzSimple [nzSize]="'large'"></nz-spin>
       <p class="mt-4 text-gray-600 dark:text-gray-400">
         Loading delicious recipes...
       </p>
     </div>
 
-    <!-- Recipes Grid - Smaller Cards -->
-    <div
+  <!-- Recipes Grid - Smaller Cards -->
+  <div
       *ngIf="!isLoading() && paginatedRecipes().length > 0"
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
     >
@@ -160,8 +162,8 @@
       ></app-recipe-card>
     </div>
 
-    <!-- No Results -->
-    <div
+  <!-- No Results -->
+  <div
       *ngIf="!isLoading() && paginatedRecipes().length === 0"
       class="py-12 text-center"
     >
@@ -186,18 +188,20 @@
       </button>
     </div>
 
-    <!-- Pagination -->
-    <div
-      *ngIf="filteredRecipes().length > pageSize()"
-      class="flex justify-center pt-4"
-    >
-      <nz-pagination
-        [nzPageIndex]="currentPage()"
-        [nzTotal]="filteredRecipes().length"
-        [nzPageSize]="pageSize()"
-        (nzPageIndexChange)="onPageChange($event)"
-        [nzShowSizeChanger]="false"
-      ></nz-pagination>
-    </div>
+  <!-- Pagination -->
+  <div
+    *ngIf="filteredRecipes().length > pageSize()"
+    class="flex justify-center pt-4"
+  >
+    <nz-pagination
+      [nzPageIndex]="currentPage()"
+      [nzTotal]="filteredRecipes().length"
+      [nzPageSize]="pageSize()"
+      (nzPageIndexChange)="onPageChange($event)"
+      [nzShowSizeChanger]="false"
+    ></nz-pagination>
   </div>
 </div>
+
+<!-- Create Recipe Modal -->
+<app-create-recipe-modal (recipeCreated)="onRecipeCreated()"></app-create-recipe-modal>

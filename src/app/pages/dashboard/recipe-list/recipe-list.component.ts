@@ -1,4 +1,11 @@
-import { Component, signal, computed, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  signal,
+  computed,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -7,6 +14,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { RecipeCardComponent } from '../recipe-card/recipe-card.component';
+import { CreateRecipeModalComponent } from '../create-recipe-modal/create-recipe-modal.component';
 import { RecipeService } from '../../../core/services/recipe.service';
 import { Recipe } from '../../../core/models/recipe.models';
 
@@ -21,6 +29,7 @@ import { Recipe } from '../../../core/models/recipe.models';
     NzPaginationModule,
     NzSpinModule,
     RecipeCardComponent,
+    CreateRecipeModalComponent,
   ],
   templateUrl: './recipe-list.component.html',
   styleUrl: './recipe-list.component.css',
@@ -28,6 +37,9 @@ import { Recipe } from '../../../core/models/recipe.models';
 export class RecipesListComponent implements OnInit {
   private recipeService = inject(RecipeService);
   private message = inject(NzMessageService);
+
+  @ViewChild(CreateRecipeModalComponent)
+  createRecipeModal!: CreateRecipeModalComponent;
 
   // UI State
   searchQuery = signal('');
@@ -170,5 +182,13 @@ export class RecipesListComponent implements OnInit {
     this.searchQuery.set('');
     this.selectedCategory.set('All Recipes');
     this.currentPage.set(1);
+  }
+
+  openCreateRecipeModal() {
+    this.createRecipeModal.showModal();
+  }
+
+  onRecipeCreated() {
+    this.loadRecipes();
   }
 }

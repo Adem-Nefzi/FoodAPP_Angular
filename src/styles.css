@@ -204,145 +204,229 @@ html {
   border-color: #e5e1d8 !important;
 }
 
-/* Dark Modal Styles - Matching Light Mode Structure */
+/* =====================================================
+   MODAL STYLES - EXACT DASHBOARD COLORS
+   Tailwind gray-50/gray-950 with green-500 accents
+   ===================================================== */
 
-/* Modal Content */
-.dark-modal .ant-modal-content {
-  background-color: #1e293b !important;
-  border-radius: 8px !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+/* Light Theme Modals */
+.light-theme .ant-modal-content {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08) !important;
+  border: 1px solid #e5e7eb !important;
 }
 
-/* Modal Header */
-.dark-modal .ant-modal-header {
-  background-color: #1e293b !important;
-  border-bottom: 1px solid #334155 !important;
-  border-radius: 8px 8px 0 0 !important;
+.light-theme .ant-modal-header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  padding: 20px 24px !important;
 }
 
-.dark-modal .ant-modal-title {
-  color: #f1f5f9 !important;
+.light-theme .ant-modal-body {
+  background: #ffffff !important;
+  color: #111827 !important;
+  padding: 24px !important;
 }
 
-/* Modal Body */
-.dark-modal .ant-modal-body {
-  background-color: #1e293b !important;
-  color: #e2e8f0 !important;
+.light-theme .ant-modal-footer {
+  background: #ffffff !important;
+  border-top: 1px solid #e5e7eb !important;
+  padding: 16px 24px !important;
 }
 
-/* Modal Footer */
-.dark-modal .ant-modal-footer {
-  background-color: #1e293b !important;
-  border-top: 1px solid #334155 !important;
-  border-radius: 0 0 8px 8px !important;
+.light-theme .ant-modal-title {
+  color: #111827 !important;
+  font-weight: 600;
 }
 
-/* Close Button */
-.dark-modal .ant-modal-close {
-  color: #94a3b8 !important;
+.light-theme .ant-modal-close {
+  color: #6b7280 !important;
 }
 
-.dark-modal .ant-modal-close:hover {
-  color: #f1f5f9 !important;
-}
-
-/* Buttons - AGGRESSIVE OVERRIDE */
-.dark-modal .ant-btn,
-.dark-modal button {
-  color: #1f2937 !important;
-}
-
-.dark-modal .ant-btn-default,
-.dark-modal
-  .ant-modal-footer
-  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous) {
-  background-color: #f3f4f6 !important;
-  border-color: #d1d5db !important;
-  color: #1f2937 !important;
-}
-
-.dark-modal .ant-btn-default:hover,
-.dark-modal
-  .ant-modal-footer
-  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous):hover {
-  background-color: #e5e7eb !important;
-  border-color: #9ca3af !important;
+.light-theme .ant-modal-close:hover {
   color: #111827 !important;
 }
 
-/* Ensure button text is always visible - DARK TEXT FOR LIGHT BUTTONS */
-.dark-modal .ant-btn span,
-.dark-modal button span {
-  color: inherit !important;
+/* Light Theme Form Elements - ONLY IN MODALS */
+.light-theme .ant-modal .ant-input,
+.light-theme .ant-modal .ant-select-selector,
+.light-theme .ant-modal .ant-input-number,
+.light-theme .ant-modal textarea.ant-input {
+  background: #ffffff !important;
+  border-color: #d1d5db !important;
+  color: #111827 !important;
 }
 
-.dark-modal .ant-btn-default span,
-.dark-modal
-  .ant-modal-footer
-  .ant-btn:not(.ant-btn-primary):not(.ant-btn-dangerous)
-  span {
-  color: #1f2937 !important;
+.light-theme .ant-modal .ant-input:focus,
+.light-theme .ant-modal .ant-select-focused .ant-select-selector,
+.light-theme .ant-modal .ant-input-number-focused,
+.light-theme .ant-modal textarea.ant-input:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
 }
 
-.dark-modal .ant-btn-primary span {
+/* Light Theme Modal Buttons */
+.light-theme .ant-modal .ant-btn-primary {
+  background: #22c55e !important;
+  border-color: #22c55e !important;
   color: #ffffff !important;
 }
 
-.dark-modal .ant-btn-dangerous span {
+.light-theme .ant-modal .ant-btn-primary:hover {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
+}
+
+.light-theme .ant-modal .ant-btn-default {
+  background: #f3f4f6 !important;
+  border-color: #e5e7eb !important;
+  color: #374151 !important;
+}
+
+.light-theme .ant-modal .ant-btn-default:hover {
+  background: #e5e7eb !important;
+  border-color: #d1d5db !important;
+}
+
+/* Dark Theme Modals - EXACT Dashboard Colors */
+.dark-theme .ant-modal-content {
+  background: #1f2937 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid #374151 !important;
+}
+
+.dark-theme .ant-modal-header {
+  background: #1f2937 !important;
+  border-bottom: 1px solid #374151 !important;
+  padding: 20px 24px !important;
+}
+
+.dark-theme .ant-modal-body {
+  background: #1f2937 !important;
+  color: #f3f4f6 !important;
+  padding: 24px !important;
+}
+
+.dark-theme .ant-modal-footer {
+  background: #1f2937 !important;
+  border-top: 1px solid #374151 !important;
+  padding: 16px 24px !important;
+}
+
+.dark-theme .ant-modal-title {
+  color: #f3f4f6 !important;
+  font-weight: 600;
+}
+
+.dark-theme .ant-modal-close {
+  color: #9ca3af !important;
+}
+
+.dark-theme .ant-modal-close:hover {
+  color: #f3f4f6 !important;
+}
+
+/* Dark Theme Form Elements - ONLY IN MODALS */
+.dark-theme .ant-modal .ant-input,
+.dark-theme .ant-modal .ant-select-selector,
+.dark-theme .ant-modal .ant-input-number,
+.dark-theme .ant-modal textarea.ant-input {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #f3f4f6 !important;
+}
+
+.dark-theme .ant-modal .ant-input:hover,
+.dark-theme .ant-modal .ant-select-selector:hover,
+.dark-theme .ant-modal .ant-input-number:hover,
+.dark-theme .ant-modal textarea.ant-input:hover {
+  border-color: #22c55e !important;
+}
+
+.dark-theme .ant-modal .ant-input:focus,
+.dark-theme .ant-modal .ant-select-focused .ant-select-selector,
+.dark-theme .ant-modal .ant-input-number-focused,
+.dark-theme .ant-modal textarea.ant-input:focus {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2) !important;
+}
+
+.dark-theme .ant-modal .ant-input::placeholder,
+.dark-theme .ant-modal textarea.ant-input::placeholder {
+  color: #9ca3af !important;
+}
+
+.dark-theme .ant-modal .ant-form-item-label > label {
+  color: #d1d5db !important;
+}
+
+/* Dark Theme Modal Buttons */
+.dark-theme .ant-modal .ant-btn-primary {
+  background: #22c55e !important;
+  border-color: #22c55e !important;
   color: #ffffff !important;
 }
 
-.dark-modal .ant-btn-primary {
-  background-color: #3b82f6 !important;
-  border-color: #3b82f6 !important;
-  color: #ffffff !important;
+.dark-theme .ant-modal .ant-btn-primary:hover {
+  background: #16a34a !important;
+  border-color: #16a34a !important;
 }
 
-.dark-modal .ant-btn-primary:hover {
-  background-color: #2563eb !important;
-  border-color: #2563eb !important;
+.dark-theme .ant-modal .ant-btn-default {
+  background: #374151 !important;
+  border-color: #4b5563 !important;
+  color: #f3f4f6 !important;
 }
 
-.dark-modal .ant-btn-dangerous {
-  background-color: #ef4444 !important;
+.dark-theme .ant-modal .ant-btn-default:hover {
+  background: #4b5563 !important;
+  border-color: #6b7280 !important;
+}
+
+.dark-theme .ant-modal .ant-btn-link {
+  color: #22c55e !important;
+}
+
+.dark-theme .ant-modal .ant-btn-dangerous {
+  background: #ef4444 !important;
   border-color: #ef4444 !important;
 }
 
-.dark-modal .ant-btn-dangerous:hover {
-  background-color: #dc2626 !important;
+.dark-theme .ant-modal .ant-btn-dangerous:hover {
+  background: #dc2626 !important;
   border-color: #dc2626 !important;
 }
 
-/* Confirm Modal Specific */
-.dark-modal .ant-modal-confirm-body-wrapper {
-  color: #e2e8f0 !important;
+/* Select Dropdown */
+.dark-theme .ant-select-dropdown {
+  background: #1f2937 !important;
+  border: 1px solid #374151 !important;
 }
 
-.dark-modal .ant-modal-confirm-body .ant-modal-confirm-title {
-  color: #f1f5f9 !important;
+.dark-theme .ant-select-item {
+  color: #f3f4f6 !important;
 }
 
-.dark-modal .ant-modal-confirm-body .ant-modal-confirm-content {
-  color: #cbd5e1 !important;
+.dark-theme .ant-select-item:hover {
+  background: #374151 !important;
 }
 
-/* Icons */
-.dark-modal .anticon {
-  color: inherit !important;
+.dark-theme .ant-select-item-option-selected {
+  background: rgba(34, 197, 94, 0.1) !important;
+  color: #22c55e !important;
 }
 
-.dark-modal .ant-modal-confirm-warning .ant-modal-confirm-body > .anticon {
-  color: #fbbf24 !important;
+/* Confirm Modals */
+.dark-theme .ant-modal-confirm-body-wrapper {
+  color: #f3f4f6 !important;
 }
 
-.dark-modal .ant-modal-confirm-error .ant-modal-confirm-body > .anticon {
-  color: #ef4444 !important;
+.dark-theme .ant-modal-confirm-body .ant-modal-confirm-title {
+  color: #f3f4f6 !important;
 }
 
-.dark-modal .ant-modal-confirm-success .ant-modal-confirm-body > .anticon {
-  color: #10b981 !important;
-}
-
-.dark-modal .ant-modal-confirm-info .ant-modal-confirm-body > .anticon {
-  color: #3b82f6 !important;
+.dark-theme .ant-modal-confirm-body .ant-modal-confirm-content {
+  color: #d1d5db !important;
 }
